@@ -10,6 +10,8 @@ import Contact from "../pages/Contact";
 import Login from "../pages/Login";
 import Register from "../pages/Register";
 import CreateFood from '../components/CreateFood/CreateFood';
+import OrderTable from '../components/OrderTable/OrderTable';
+import AddCategory from '../components/AddCategory/AddCategory';
 
 
 const Routers = () => {
@@ -25,6 +27,8 @@ const Routers = () => {
       <Route path="/register" element={<Register />} />
       <Route path="/contact" element={<Contact />} />
       <Route path="/CreateFood" element={<CreateFood />} />
+      <Route path="/OrderTable" element={<OrderTable />} />
+      <Route path="/AddCategory" element={<AddCategory />} />
     </Routes>
   );
 };

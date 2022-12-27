@@ -25,6 +25,10 @@ const nav__links = [
     display: "Contact",
     path: "/contact",
   },
+  {
+    display: "Order",
+    path: "/OrderTable",
+  },
 ];
 
 const Header = () => {
@@ -51,7 +55,7 @@ const Header = () => {
       }
     });
 
-    return () => window.removeEventListener("scroll", () => {});
+    return () => window.removeEventListener("scroll", () => { });
   }, []);
 
   return (

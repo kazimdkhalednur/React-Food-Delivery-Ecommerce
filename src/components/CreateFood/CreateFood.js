@@ -3,7 +3,7 @@ import { Button, Col, Form, FormGroup, Input, Label, Row } from 'reactstrap';
 
 function CreateFood() {
     return (
-        <Row>
+        <Row className='my-5'>
             <Col className='col-md-6 m-auto'>
                 <h1 className='mx-2'>Food Create</h1>
                 <Form className='container-fluid my-5'>
@@ -33,7 +33,7 @@ function CreateFood() {
                         <Label for="exampleText">Description</Label>
                         <Input rows="7" type="textarea" name="description" id="exampleText" />
                     </FormGroup>
-                    <Button>Create</Button>
+                    <Button color="primary">Create</Button>{' '}
                 </Form>
             </Col>
         </Row>
