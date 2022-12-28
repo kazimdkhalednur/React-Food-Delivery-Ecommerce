@@ -22,7 +22,7 @@ const Register = () => {
         type: "buyer",
       })
       .then((res) => {
-        if (res.status == 201) {
+        if (res.status === 201) {
           navigate("/login");
         }
       })

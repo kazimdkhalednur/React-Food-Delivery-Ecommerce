@@ -52,12 +52,28 @@ const Home = () => {
   const [category, setCategory] = useState("ALL");
   const [allProducts, setAllProducts] = useState(products);
 
-  let getProducts = async () => {
+  let getFood = async () => {
     let response = await axiosInstance.get("");
-    console.log(response.data);
+    setAllProducts(response.data);
   };
 
-  getProducts();
+  let getCategory = async () => {
+    let response = await axiosInstance.get("category/");
+    console.log(response.data);
+    setCategory(response.data);
+  };
+  let createCategory = async () => {
+    let response = await axiosInstance.post("category/", { title: "Bread" });
+    console.log(response.data);
+    // setCategory(response.data);
+  };
+
+  useEffect(() => {
+    getFood();
+
+    createCategory();
+    getCategory();
+  }, []);
 
   useEffect(() => {
     if (category === "ALL") {

@@ -14,7 +14,6 @@ const INITIAL_LOGIN_DATA = {
 const Login = () => {
   const baseURL = process.env.REACT_APP_SERVICE_URL;
   const [data, setData] = useState(INITIAL_LOGIN_DATA);
-  const [error, setError] = useState("");
   const navigate = useNavigate();
 
   const submitHandler = async (e) => {
