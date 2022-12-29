@@ -1,6 +1,13 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Button, Col, Form, FormGroup, Input, Label, Row } from "reactstrap";
 import axiosInstance from "../../utils/axiosInstance";
+
+const initial_values = {
+  title: "",
+  number: "",
+  image: "",
+  description: "",
+}
 
 function CreateFood() {
   let createFood = async (e) => {
@@ -17,6 +24,8 @@ function CreateFood() {
   // useEffect(() => {
   //   getProducts();
   // });
+
+  const [value, setValue] = useState(initial_values);
 
   return (
     <Row className="my-5">
@@ -49,6 +58,8 @@ function CreateFood() {
               name="number"
               id="exampleNumber"
               placeholder="Prize"
+              onChange={(e) => { console.log(e.target.number.value); return e.target.number.value; }}
+              value={initial_values.number}
             />
           </FormGroup>
           <FormGroup>

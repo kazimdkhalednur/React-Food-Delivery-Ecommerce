@@ -13,6 +13,7 @@ import CreateFood from "../components/CreateFood/CreateFood";
 import OrderTable from "../components/OrderTable/OrderTable";
 import AddCategory from "../components/AddCategory/AddCategory";
 import RoutePrivate from "./RoutePrivate";
+import AdminOrderTable from "../components/AdminOrderTable/AdminOrderTable";
 
 const Routers = () => {
   return (
@@ -25,12 +26,13 @@ const Routers = () => {
       <Route path="/register" element={<Register />} />
       <Route path="/contact" element={<Contact />} />
       <Route path="/login" element={<Login />} />
-      <Route element={<RoutePrivate />}>
-        <Route path="/checkout" element={<Checkout />} />
-        <Route path="/food/create" element={<CreateFood />} />
-        <Route path="/order" element={<OrderTable />} />
-        <Route path="/food/category/create" element={<AddCategory />} />
-      </Route>
+      <Route path="/AdminOrderTable" element={<AdminOrderTable />} />
+      {/* <Route element={<RoutePrivate />}>
+      </Route> */}
+      <Route path="/checkout" element={<Checkout />} />
+      <Route path="/food/create" element={<CreateFood />} />
+      <Route path="/order" element={<OrderTable />} />
+      <Route path="/food/category/create" element={<AddCategory />} />
     </Routes>
   );
 };
