@@ -10,43 +10,41 @@ import ReactPaginate from "react-paginate";
 import "../styles/all-foods.css";
 import "../styles/pagination.css";
 
-
 const AllFoods = () => {
-    const [searchTerm, setSearchTerm] = useState("");
-    const [pageNumber, setPageNumber] = useState(0);
-    
-    const searchedProduct = products.filter((item) => {
-        if (searchTerm.value === "") {
-          return item;
-        }
-        if (item.title.toLowerCase().includes(searchTerm.toLowerCase())) {
-          return item;
-        } else {
-          return console.log("not found");
-        }
-      });
-    
-      const productPerPage = 12;
-      const visitedPage = pageNumber * productPerPage;
-      const displayPage = searchedProduct.slice(
-        visitedPage,
-        visitedPage + productPerPage
-      );
-    
-      const pageCount = Math.ceil(searchedProduct.length / productPerPage);
-    
-      const changePage = ({ selected }) => {
-        setPageNumber(selected);
-      };
+  const [searchTerm, setSearchTerm] = useState("");
+  const [pageNumber, setPageNumber] = useState(0);
+
+  const searchedProduct = products.filter((item) => {
+    if (searchTerm.value === "") {
+      return item;
+    }
+    if (item.title.toLowerCase().includes(searchTerm.toLowerCase())) {
+      return item;
+    } else {
+      return console.log("not found");
+    }
+  });
+
+  const productPerPage = 12;
+  const visitedPage = pageNumber * productPerPage;
+  const displayPage = searchedProduct.slice(
+    visitedPage,
+    visitedPage + productPerPage
+  );
+
+  const pageCount = Math.ceil(searchedProduct.length / productPerPage);
+
+  const changePage = ({ selected }) => {
+    setPageNumber(selected);
+  };
   return (
     <Helmet title="All-Foods">
       <CommonSection title="All Foods" />
 
-
       <section>
         <Container>
           <Row>
-            <Col  lg="8" md="6" sm="6" xs="12">
+            <Col lg="8" md="6" sm="6" xs="12">
               <div className="offset-5 search__widget d-flex align-items-center justify-content-between ">
                 <input
                   type="text"
@@ -59,8 +57,8 @@ const AllFoods = () => {
                 </span>
               </div>
             </Col>
-            </Row>
-            <Row>
+          </Row>
+          <Row>
             {displayPage.map((item) => (
               <Col lg="3" md="4" sm="6" xs="6" key={item.id} className="mb-4">
                 <ProductCard item={item} />
@@ -76,7 +74,6 @@ const AllFoods = () => {
                 containerClassName=" paginationBttns "
               />
             </div>
-
           </Row>
         </Container>
       </section>

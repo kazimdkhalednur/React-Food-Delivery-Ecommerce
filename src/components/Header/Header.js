@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from "react";
+import React, { useRef, useEffect, useState } from "react";
 
 import { Container, NavbarBrand } from "reactstrap";
 import logo from "../../assets/images/logo.png";
@@ -27,7 +27,7 @@ const nav__links = [
   },
   {
     display: "Order",
-    path: "/OrderTable",
+    path: "/order",
   },
 ];
 
@@ -35,6 +35,8 @@ const Header = () => {
   const menuRef = useRef(null);
   const headerRef = useRef(null);
   const totalQuantity = useSelector((state) => state.cart.totalQuantity);
+  const { user, userType } = useSelector((state) => state.auth);
+  const [navLink, setNavLink] = useState(nav__links);
   const dispatch = useDispatch();
 
   const toggleCart = () => {
@@ -55,7 +57,20 @@ const Header = () => {
       }
     });
 
-    return () => window.removeEventListener("scroll", () => { });
+    return () => window.removeEventListener("scroll", () => {});
+  }, []);
+
+  const sellerNavbar = [
+    {
+      display: "Create Food",
+      path: "/food/create",
+    },
+  ];
+
+  useEffect(() => {
+    if (userType === "seller") {
+      setNavLink({ ...navLink, sellerNavbar });
+    }
   }, []);
 
   return (
@@ -74,7 +89,7 @@ const Header = () => {
           {/* Menu Part */}
           <div className="navigation" ref={menuRef}>
             <div className="menu d-flex align-items-center gap-5">
-              {nav__links.map((item, index) => (
+              {navLink.map((item, index) => (
                 <NavLink
                   onClick={toggleMenu}
                   to={item.path}

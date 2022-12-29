@@ -5,6 +5,13 @@ import storage from "../utils/storage";
 import Helmet from "../components/Helmet/Helmet";
 import CommonSection from "../components/UI/common-section/CommonSection";
 import axios from "axios";
+import { useDispatch } from "react-redux";
+import {
+  setUser,
+  setUserType,
+  setAuthenticated,
+} from "../store/auth/authSlice";
+import jwt_decode from "jwt-decode";
 
 const INITIAL_LOGIN_DATA = {
   email: "",
@@ -15,20 +22,28 @@ const Login = () => {
   const baseURL = process.env.REACT_APP_SERVICE_URL;
   const [data, setData] = useState(INITIAL_LOGIN_DATA);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const submitHandler = async (e) => {
     e.preventDefault();
     axios
       .post(`${baseURL}/accounts/login/`, data)
       .then((res) => {
-        storage.set("authTokens", res.data);
-        navigate("/home");
+        if (res.status === 200) {
+          storage.set("authTokens", res.data);
+          const user = jwt_decode(res.data.access);
+          dispatch(setUser(user.user_id));
+          dispatch(setUserType(user.user_type));
+          dispatch(setAuthenticated(true));
+          navigate("/home");
+        } else {
+          navigate("/login");
+        }
       })
       .catch((error) => {
         console.log(error);
       });
   };
-
   const userData = (e) => {
     const userdata = { ...data };
     userdata[e.currentTarget.name] = e.currentTarget.value;

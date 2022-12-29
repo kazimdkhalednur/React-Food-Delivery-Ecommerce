@@ -62,16 +62,14 @@ const Home = () => {
     console.log(response.data);
     setCategory(response.data);
   };
-  let createCategory = async () => {
-    let response = await axiosInstance.post("category/", { title: "Bread" });
-    console.log(response.data);
-    // setCategory(response.data);
-  };
+  // let createCategory = async () => {
+  //   let response = await axiosInstance.post("category/", { title: "Bread" });
+  //   console.log(response.data);
+  // };
 
   useEffect(() => {
     getFood();
-
-    createCategory();
+    // createCategory();
     getCategory();
   }, []);
 
