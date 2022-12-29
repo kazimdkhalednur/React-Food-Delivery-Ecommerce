@@ -142,7 +142,6 @@ const Header = () => {
 
 export default Header;
 
-
 const styles = {
   ul: {
     position: "fixed", top: "70px", listStyle: "none", right: "180px", borderRadius: "4px", backgroundColor: "#EEE", textAlign: "center", paddingLeft: "0px", display: "none"
