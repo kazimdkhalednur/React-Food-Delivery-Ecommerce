@@ -1,52 +1,60 @@
-import React from 'react';
-import { Badge, Col, Row, Table } from 'reactstrap';
+import React, { useEffect } from 'react';
+import { useState } from 'react';
+import { Link } from 'react-router-dom';
+import { Col, Row, Table } from 'reactstrap';
+import AdminOrderTable2 from './AdminOrderTable2';
+import AdminOrderTable3 from './AdminOrderTable3';
+
+// Ei Page e Current Orders er List Mapping
+
 
 function AdminOrderTable() {
+    const [orderStatus, setOrderStatus] = useState('current');
     return (
         <Row className='my-3'>
-            <Col className='col-md-8 m-auto'>
-                <h1 className='mb-3 mt-5'>Order Table</h1>
-                <Table bordered>
-                    <thead>
-                        <tr>
-                            <th>Serial</th>
-                            <th>Product Name</th>
-                            <th>Status</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <th scope="row">1</th>
-                            <td>Mark</td>
-                            <td>
-                                <Badge bg="success">
-                                    Delivered
-                                </Badge>{' '}
-                            </td>
-                        </tr>
-                        <tr>
-                            <th scope="row">2</th>
-                            <td>Jacob</td>
-                            <td>
-                                <Badge bg="danger">
-                                    Pending
-                                </Badge>{' '}
-                            </td>
-                        </tr>
-                        <tr>
-                            <th scope="row">3</th>
-                            <td>Larry</td>
-                            <td>
-                                <Badge bg="success">
-                                    Delivered
-                                </Badge>{' '}
-                            </td>
-                        </tr>
-                    </tbody>
-                </Table>
+            <Col className='col-md-2' style={styles.col}>
+                <div>
+                    <ul style={styles.ul}>
+                        <li>
+                            <Link to="/AdminOrderTable" style={styles.link} onClick={() => setOrderStatus('current')}>Current Orders</Link>
+                        </li>
+                        <li style={styles.li}>
+                            <Link to="/AdminOrderTable" style={styles.link} onClick={() => setOrderStatus('allorder')}>All Orders</Link>
+                        </li>
+                    </ul>
+                </div>
             </Col>
+            {/* {x == y ? <AdminOrderTable2 /> : <AdminOrderTable3 />} */}
+            {orderStatus === 'current' ? <AdminOrderTable3 /> : <AdminOrderTable2 />}
         </Row>
     );
 }
 
+
+
 export default AdminOrderTable;
+
+const styles = {
+    col: {
+        marginLeft: "100px",
+        active: "false",
+    },
+    ul: {
+        listStyle: "none",
+        padding: "15px",
+        backgroundColor: "#eee",
+        minHeight: "400px",
+        borderRadius: "8px",
+    },
+    link: {
+        textDecoration: "none",
+        fontSize: "18px",
+        fontWeight: "600",
+        padding: "15px",
+        margin: "5px 0",
+        display: "inline-block",
+        borderRadius: "4px",
+        backgroundColor: "#ccc",
+        width: "100%",
+    }
+}

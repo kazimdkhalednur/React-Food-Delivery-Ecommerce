@@ -16,11 +16,11 @@ const Layout = () => {
             {showCart && <Carts />}
 
             <div>
-                <Routes/>
+                <Routes />
             </div>
 
             <Footer />
-        </div>    
+        </div>
     );
 };
 
