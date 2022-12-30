@@ -13,7 +13,7 @@ function AdminOrderTable2() {
             <Table bordered>
                 <thead>
                     <tr>
-                        <th>Serial</th>
+                        <th>Serial 01</th>
                         <th>Product Name</th>
                         <th>Status</th>
                     </tr>

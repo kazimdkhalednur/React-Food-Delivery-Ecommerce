@@ -38,6 +38,7 @@ const Header = () => {
   const { user, userType } = useSelector((state) => state.auth);
   const [navLink, setNavLink] = useState(nav__links);
   const dispatch = useDispatch();
+  const [profileStatus, setProfileStatus] = useState('none');
 
   const toggleCart = () => {
     dispatch(cartUiActions.toggle());
@@ -72,6 +73,42 @@ const Header = () => {
       setNavLink({ ...navLink, sellerNavbar });
     }
   }, []);
+
+  // useEffect(() => {
+
+  // }, [profileStatus]);
+
+  function profileVisible() {
+    return (<ul className="flex flex-col" style={styles.ul}>
+      <li style={styles.li}>
+        <Link to='' style={styles.a}>
+          Profile
+        </Link>
+      </li>
+      <li style={styles.li}>
+        <Link to='' style={styles.a}>
+          Logout
+        </Link>
+      </li>
+    </ul>)
+  }
+
+  function setProfileVisible2() {
+    if (profileStatus === 'none') {
+      setProfileStatus('block');
+    } else {
+      setProfileStatus('none');
+    }
+  }
+
+  const styles = {
+    ul: {
+      position: "fixed", top: "70px", listStyle: "none", right: "6%", borderRadius: "4px", backgroundColor: "#EEE", textAlign: "center", paddingLeft: "0px", display: profileStatus
+    },
+    li: { backgroundColor: "#ccc", padding: "5px 25px", margin: "5px 0", textAlign: "center" },
+    a: { textDecoration: "none", color: "black", fontWeight: "700" }
+  };
+
 
   return (
     <>
@@ -113,9 +150,9 @@ const Header = () => {
               </span>
 
               <span className="user">
-                <Link to="/login">
-                  <i className="ri-user-line"></i>
-                </Link>
+                {/* <Link to=''> */}
+                <i className="ri-user-line" onClick={setProfileVisible2}></i>
+                {/* </Link> */}
               </span>
               <span className="mobile__menu" onClick={toggleMenu}>
                 <i className="ri-menu-line"></i>
@@ -124,28 +161,10 @@ const Header = () => {
           </div>
         </Container>
       </header>
-      <ul className="flex flex-col" style={styles.ul}>
-        <li style={styles.li}>
-          <Link to="" style={styles.a}>
-            Profile
-          </Link>
-        </li>
-        <li style={styles.li}>
-          <Link to="" style={styles.a}>
-            Logout
-          </Link>
-        </li>
-      </ul>
+      {profileVisible()}
     </>
   );
 };
 
+// const profileStatusValue = profileStatus;
 export default Header;
-
-const styles = {
-  ul: {
-    position: "fixed", top: "70px", listStyle: "none", right: "180px", borderRadius: "4px", backgroundColor: "#EEE", textAlign: "center", paddingLeft: "0px", display: "none"
-  },
-  li: { backgroundColor: "#ccc", padding: "5px 25px", margin: "5px 0", textAlign: "center" },
-  a: { textDecoration: "none", color: "black", fontWeight: "700" }
-};
