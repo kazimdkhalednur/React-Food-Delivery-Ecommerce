@@ -57,7 +57,7 @@ const Header = () => {
       }
     });
 
-    return () => window.removeEventListener("scroll", () => { });
+    return () => window.removeEventListener("scroll", () => {});
   }, []);
 
   const sellerNavbar = [
@@ -142,11 +142,23 @@ const Header = () => {
 
 export default Header;
 
-
 const styles = {
   ul: {
-    position: "fixed", top: "70px", listStyle: "none", right: "180px", borderRadius: "4px", backgroundColor: "#EEE", textAlign: "center", paddingLeft: "0px", display: "none"
+    position: "fixed",
+    top: "70px",
+    listStyle: "none",
+    right: "180px",
+    borderRadius: "4px",
+    backgroundColor: "#EEE",
+    textAlign: "center",
+    paddingLeft: "0px",
+    display: "none",
   },
-  li: { backgroundColor: "#ccc", padding: "5px 25px", margin: "5px 0", textAlign: "center" },
-  a: { textDecoration: "none", color: "black", fontWeight: "700" }
+  li: {
+    backgroundColor: "#ccc",
+    padding: "5px 25px",
+    margin: "5px 0",
+    textAlign: "center",
+  },
+  a: { textDecoration: "none", color: "black", fontWeight: "700" },
 };

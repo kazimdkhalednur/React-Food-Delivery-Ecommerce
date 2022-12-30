@@ -2,6 +2,11 @@ import React from 'react';
 import { Button, Col, Form, FormGroup, Input, Label, Row } from 'reactstrap';
 
 function AddCategory() {
+    // let createCategory = async () => {
+  //   let response = await axiosInstance.post("category/", { title: "Bread" });
+  //   console.log(response.data);
+  // };
+  // createCategory();
     return (
         <Row className='my-5'>
             <Col className='col-md-6 m-auto'>
