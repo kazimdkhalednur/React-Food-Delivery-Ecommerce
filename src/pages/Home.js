@@ -180,9 +180,8 @@ const Home = () => {
             <Col lg="12">
               <div className="food__category d-flex align-items-center justify-content-center gap-4">
                 <button
-                  className={`all__btn  ${
-                    category === "ALL" ? "foodBtnActive" : ""
-                  } `}
+                  className={`all__btn  ${category === "ALL" ? "foodBtnActive" : ""
+                    } `}
                   onClick={() => setCategory("ALL")}
                 >
                   All
