@@ -10,12 +10,6 @@ import { Link } from "react-router-dom";
 
 import "../styles/home.css";
 
-import products from "../assets/fake-data/products.js";
-
-import foodCategoryImg01 from "../assets/images/hamburger.png";
-import foodCategoryImg02 from "../assets/images/pizza.png";
-import foodCategoryImg03 from "../assets/images/bread.png";
-
 import ProductCard from "../components/UI/product-card/ProductCard";
 
 import whyImg from "../assets/images/location.png";
@@ -50,58 +44,35 @@ const featureData = [
 
 const Home = () => {
   const [category, setCategory] = useState("ALL");
-  const [allProducts, setAllProducts] = useState(products);
-
-  let getFood = async () => {
-    let response = await axiosInstance.get("");
-    setAllProducts(response.data);
-  };
-
-  let getCategory = async () => {
-    let response = await axiosInstance.get("category/");
-    console.log(response.data);
-    setCategory(response.data);
-  };
-  // let createCategory = async () => {
-  //   let response = await axiosInstance.post("category/", { title: "Bread" });
-  //   console.log(response.data);
-  // };
+  const [allCategorys, setAllCategorys] = useState();
+  const [allProducts, setAllProducts] = useState();
+  const [filterProducts, setfilterProducts] = useState(allProducts);
 
   useEffect(() => {
-    getFood();
-    // createCategory();
+    let getFoods = async () => {
+      let response = await axiosInstance.get("");
+      setAllProducts(response.data);
+      setfilterProducts(response.data);
+    };
+    getFoods();
+    let getCategory = async () => {
+      let response = await axiosInstance.get("category/");
+      setAllCategorys(response.data);
+    };
     getCategory();
   }, []);
 
   useEffect(() => {
     if (category === "ALL") {
-      setAllProducts(products);
-    }
-
-    if (category === "BURGER") {
-      const filteredProducts = products.filter(
-        (item) => item.category === "Burger"
+      setfilterProducts(allProducts);
+    } else {
+      const filteredProducts = allProducts.filter(
+        (item) => item.category.title === category
       );
 
-      setAllProducts(filteredProducts);
+      setfilterProducts(filteredProducts);
     }
-
-    if (category === "PIZZA") {
-      const filteredProducts = products.filter(
-        (item) => item.category === "Pizza"
-      );
-
-      setAllProducts(filteredProducts);
-    }
-
-    if (category === "BREAD") {
-      const filteredProducts = products.filter(
-        (item) => item.category === "Bread"
-      );
-
-      setAllProducts(filteredProducts);
-    }
-  }, [category]);
+  }, [category, allProducts]);
 
   return (
     <Helmet title="Home">
@@ -215,36 +186,22 @@ const Home = () => {
                 >
                   All
                 </button>
-                <button
-                  className={`d-flex align-items-center gap-2 ${category === "BURGER" ? "foodBtnActive" : ""
+                {allCategorys?.map((item) => (
+                  <button
+                    className={`d-flex align-items-center gap-2 ${
+                      category === `${item.title}` ? "foodBtnActive" : ""
                     } `}
-                  onClick={() => setCategory("BURGER")}
-                >
-                  <img src={foodCategoryImg01} alt="" />
-                  Burger
-                </button>
-
-                <button
-                  className={`d-flex align-items-center gap-2 ${category === "PIZZA" ? "foodBtnActive" : ""
-                    } `}
-                  onClick={() => setCategory("PIZZA")}
-                >
-                  <img src={foodCategoryImg02} alt="" />
-                  Pizza
-                </button>
-
-                <button
-                  className={`d-flex align-items-center gap-2 ${category === "BREAD" ? "foodBtnActive" : ""
-                    } `}
-                  onClick={() => setCategory("BREAD")}
-                >
-                  <img src={foodCategoryImg03} alt="" />
-                  Bread
-                </button>
+                    onClick={() => setCategory(`${item.title}`)}
+                    key={item.id}
+                  >
+                    <img src={item.image} alt="" />
+                    {item.title}
+                  </button>
+                ))}
               </div>
             </Col>
 
-            {allProducts.map((item) => (
+            {filterProducts?.map((item) => (
               <Col lg="3" md="4" sm="6" xs="6" key={item.id} className="mt-5">
                 <ProductCard item={item} />
               </Col>

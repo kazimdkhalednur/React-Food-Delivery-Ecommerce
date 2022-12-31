@@ -1,11 +1,12 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Helmet from "../components/Helmet/Helmet";
 import CommonSection from "../components/UI/common-section/CommonSection";
 
 import { Container, Row, Col } from "reactstrap";
-import products from "../assets/fake-data/products";
+// import products from "../assets/fake-data/products";
 import ProductCard from "../components/UI/product-card/ProductCard";
 import ReactPaginate from "react-paginate";
+import axiosInstance from "../utils/axiosInstance.js";
 
 import "../styles/all-foods.css";
 import "../styles/pagination.css";
@@ -13,8 +14,16 @@ import "../styles/pagination.css";
 const AllFoods = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [pageNumber, setPageNumber] = useState(0);
+  const [allProducts, setAllProducts] = useState();
 
-  const searchedProduct = products.filter((item) => {
+  useEffect(() => {
+    let getFood = async () => {
+      let response = await axiosInstance.get("");
+      setAllProducts(response.data);
+    };
+    getFood();
+  }, []);
+  const searchedProduct = allProducts?.filter((item) => {
     if (searchTerm.value === "") {
       return item;
     }
@@ -27,12 +36,12 @@ const AllFoods = () => {
 
   const productPerPage = 12;
   const visitedPage = pageNumber * productPerPage;
-  const displayPage = searchedProduct.slice(
+  const displayPage = searchedProduct?.slice(
     visitedPage,
     visitedPage + productPerPage
   );
 
-  const pageCount = Math.ceil(searchedProduct.length / productPerPage);
+  const pageCount = Math.ceil(searchedProduct?.length / productPerPage);
 
   const changePage = ({ selected }) => {
     setPageNumber(selected);
@@ -59,7 +68,7 @@ const AllFoods = () => {
             </Col>
           </Row>
           <Row>
-            {displayPage.map((item) => (
+            {displayPage?.map((item) => (
               <Col lg="3" md="4" sm="6" xs="6" key={item.id} className="mb-4">
                 <ProductCard item={item} />
               </Col>

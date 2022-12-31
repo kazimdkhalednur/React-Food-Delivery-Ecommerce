@@ -12,16 +12,36 @@ import { cartActions } from "../store/shopping-cart/cartSlice";
 import "../styles/food-details.css";
 
 import ProductCard from "../components/UI/product-card/ProductCard";
+import axiosInstance from "../utils/axiosInstance";
 
 const FoodDetails = () => {
   const [tab, setTab] = useState("desc");
+  const [product, setProduct] = useState();
+  const [allProducts, setAllProducts] = useState();
   const { id } = useParams();
   const dispatch = useDispatch();
 
-  const product = products.find((product) => product.id === id);
-  const { title, price, category, desc, image01 } = product;
+  useEffect(() => {
+    let getFoods = async () => {
+      let response = await axiosInstance.get("");
+      setAllProducts(response.data);
+    };
+    getFoods();
+    let getFood = async () => {
+      let response = await axiosInstance.get(`/${id}`);
+      setProduct(response.data);
+    };
+    getFood();
+  }, []);
+  const title = product?.title;
+  const category = product?.category.title;
+  const image = product?.image;
+  const price = product?.price;
+  const description = product?.description;
 
-  const relatedProduct = products.filter((item) => category === item.category);
+  const relatedProduct = allProducts?.filter(
+    (item) => category === item.category.title
+  );
 
   const addItem = () => {
     dispatch(
@@ -29,7 +49,7 @@ const FoodDetails = () => {
         id,
         title,
         price,
-        image01,
+        image,
       })
     );
   };
@@ -45,10 +65,9 @@ const FoodDetails = () => {
       <section>
         <Container>
           <Row>
-
-            <Col lg="4" md="4" >
+            <Col lg="4" md="4">
               <div className="product__main-img ">
-                <img src={product.image01} alt="" className="w-100" />
+                <img src={image} alt="" className="w-100" />
               </div>
             </Col>
 
@@ -86,7 +105,7 @@ const FoodDetails = () => {
 
               {tab === "desc" ? (
                 <div className="tab__content">
-                  <p>{desc}</p>
+                  <p>{description}</p>
                 </div>
               ) : (
                 <div className="tab__form mb-3">
@@ -146,7 +165,7 @@ const FoodDetails = () => {
               <h2 className="related__Product-title">You might also like</h2>
             </Col>
 
-            {relatedProduct.map((item) => (
+            {relatedProduct?.map((item) => (
               <Col lg="3" md="4" sm="6" xs="6" className="mb-4" key={item.id}>
                 <ProductCard item={item} />
               </Col>

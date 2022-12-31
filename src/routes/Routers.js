@@ -13,6 +13,7 @@ import CreateFood from "../components/CreateFood/CreateFood";
 import OrderTable from "../components/OrderTable/OrderTable";
 import AddCategory from "../components/AddCategory/AddCategory";
 import RoutePrivate from "./RoutePrivate";
+import RouteBuyer from "./BuyerRoute";
 import AdminOrderTable from "../components/AdminOrderTable/AdminOrderTable";
 
 const Routers = () => {
@@ -26,13 +27,15 @@ const Routers = () => {
       <Route path="/register" element={<Register />} />
       <Route path="/contact" element={<Contact />} />
       <Route path="/login" element={<Login />} />
-      <Route path="/AdminOrderTable" element={<AdminOrderTable />} />
-      {/* <Route element={<RoutePrivate />}>
-      </Route> */}
-      <Route path="/checkout" element={<Checkout />} />
-      <Route path="/food/create" element={<CreateFood />} />
-      <Route path="/order" element={<OrderTable />} />
-      <Route path="/food/category/create" element={<AddCategory />} />
+      <Route element={<RoutePrivate />}>
+        <Route element={<RouteBuyer />}>
+          <Route path="/order" element={<OrderTable />} />
+          <Route path="/checkout" element={<Checkout />} />
+        </Route>
+        <Route path="/food/create" element={<CreateFood />} />
+        <Route path="/AdminOrderTable" element={<AdminOrderTable />} />
+        <Route path="/food/category/create" element={<AddCategory />} />
+      </Route>
     </Routes>
   );
 };
