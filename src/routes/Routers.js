@@ -26,13 +26,13 @@ const Routers = () => {
       <Route path="/register" element={<Register />} />
       <Route path="/contact" element={<Contact />} />
       <Route path="/login" element={<Login />} />
-      <Route path="/AdminOrderTable" element={<AdminOrderTable />} />
-      {/* <Route element={<RoutePrivate />}>
-      </Route> */}
-      <Route path="/checkout" element={<Checkout />} />
-      <Route path="/food/create" element={<CreateFood />} />
-      <Route path="/order" element={<OrderTable />} />
-      <Route path="/food/category/create" element={<AddCategory />} />
+      <Route element={<RoutePrivate />}>
+        <Route path="/AdminOrderTable" element={<AdminOrderTable />} />
+        <Route path="/checkout" element={<Checkout />} />
+        <Route path="/food/create" element={<CreateFood />} />
+        <Route path="/order" element={<OrderTable />} />
+        <Route path="/food/category/create" element={<AddCategory />} />
+      </Route>
     </Routes>
   );
 };

@@ -4,25 +4,28 @@ import dayjs from "dayjs";
 import jwt_decode from "jwt-decode";
 
 const baseURL = process.env.REACT_APP_SERVICE_URL;
+const authTokens = storage.get("authTokens");
 
 const axiosInstance = axios.create({
   baseURL,
 });
 
+const checkRefreshTokenExpire = async () => {
+  axios
+    .post(`${baseURL}/accounts/token/verify/`, { token: authTokens.refresh })
+    .then((res) => {
+      if (res.status === 200) {
+        return true;
+      }
+    })
+    .catch((e) => {
+      return false;
+    });
+};
+
 axiosInstance.interceptors.request.use(async (req) => {
-  let authTokens = storage.get("authTokens");
-  let bool = false;
-  if (authTokens) {
-    axios
-      .post(`${baseURL}/accounts/token/verify/`, { token: authTokens.refresh })
-      .then((res) => {
-        if (res.status === 200) {
-          bool = true;
-        }
-      })
-      .catch((e) => {});
-  }
-  if (bool) {
+  let authTokenValid = checkRefreshTokenExpire();
+  if (authTokenValid) {
     req.headers.authorization = `Bearer ${authTokens?.access}`;
     const user = jwt_decode(authTokens?.access);
     const isExpired = dayjs.unix(user.exp).diff(dayjs()) < 1;
