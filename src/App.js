@@ -1,8 +1,8 @@
 import Layout from "./components/Layout/Layout";
-import CheckAuthenticated from "./utils/CheckAuthenticated";  
+import useAuth from "./hooks/useAuth";
 
 function App() {
-  CheckAuthenticated();
+  useAuth();
   return <Layout />;
 }
 

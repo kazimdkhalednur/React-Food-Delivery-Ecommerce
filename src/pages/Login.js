@@ -1,17 +1,14 @@
-import React, { useState } from "react";
-import { Container, Row, Col } from "reactstrap";
+import React, { useState, useEffect } from "react";
+import { Container, Row, Col, Alert } from "reactstrap";
 import { Link, useNavigate } from "react-router-dom";
 import storage from "../utils/storage";
 import Helmet from "../components/Helmet/Helmet";
 import CommonSection from "../components/UI/common-section/CommonSection";
 import axios from "axios";
 import { useDispatch } from "react-redux";
-import {
-  setUser,
-  setUserType,
-  setAuthenticated,
-} from "../store/auth/authSlice";
+import { setUserType, setAuthenticated } from "../store/auth/authSlice";
 import jwt_decode from "jwt-decode";
+import useAuth from "../hooks/useAuth";
 
 const INITIAL_LOGIN_DATA = {
   email: "",
@@ -19,8 +16,13 @@ const INITIAL_LOGIN_DATA = {
 };
 
 const Login = () => {
+  // window.location.reload();
+  const authenticated = useAuth();
   const baseURL = process.env.REACT_APP_SERVICE_URL;
   const [data, setData] = useState(INITIAL_LOGIN_DATA);
+  // const { count, message } = useSelector((state) => state.message);
+  const msg = storage.get("message");
+  const [message, setMessage] = useState(msg);
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -32,10 +34,10 @@ const Login = () => {
         if (res.status === 200) {
           storage.set("authTokens", res.data);
           const user = jwt_decode(res.data.access);
-          dispatch(setUser(user.user_id));
           dispatch(setUserType(user.user_type));
           dispatch(setAuthenticated(true));
           navigate("/home");
+          window.location.reload();
         } else {
           navigate("/login");
         }
@@ -48,12 +50,20 @@ const Login = () => {
     const userdata = { ...data };
     userdata[e.currentTarget.name] = e.currentTarget.value;
     setData(userdata);
-    // setError("");
   };
-
+  useEffect(() => {
+    if (authenticated) {
+      navigate("/");
+    }
+    if (message) {
+      storage.remove("message");
+    }
+  }, []);
+  console.log(message);
   return (
     <Helmet title="Login">
       <CommonSection title="Login" />
+      {message ? <Alert color="primary">{message}</Alert> : undefined}
       <section>
         <Container>
           <Row>

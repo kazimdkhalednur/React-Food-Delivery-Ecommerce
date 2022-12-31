@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 
 import Header from "../Header/Header";
 import Footer from "../Footer/Footer";
@@ -8,20 +8,20 @@ import Carts from "../UI/cart/Carts.js";
 import { useSelector } from "react-redux";
 
 const Layout = () => {
-    const showCart = useSelector((state) => state.cartUi.cartIsVisible);
-    return (
-        <div>
-            <Header />
+  const showCart = useSelector((state) => state.cartUi.cartIsVisible);
+  return (
+    <div>
+      <Header />
 
-            {showCart && <Carts />}
+      {showCart && <Carts />}
 
-            <div>
-                <Routes />
-            </div>
+      <div>
+        <Routes />
+      </div>
 
-            <Footer />
-        </div>
-    );
+      <Footer />
+    </div>
+  );
 };
 
 export default Layout;
