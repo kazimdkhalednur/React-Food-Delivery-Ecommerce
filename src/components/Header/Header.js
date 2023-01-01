@@ -7,6 +7,7 @@ import "../../styles/header.css";
 import { useSelector, useDispatch } from "react-redux";
 
 import { cartUiActions } from "../../store/shopping-cart/cartUiSlice";
+import useAuth from "../../hooks/useAuth";
 
 const nav__links = [
   {
@@ -25,9 +26,23 @@ const nav__links = [
     display: "Contact",
     path: "/contact",
   },
+];
+const buyerNavbar = [
   {
     display: "Order",
     path: "/order",
+  },
+];
+const sellerNavbar = [
+  {
+    display: "Create Food",
+    path: "/food/create",
+  },
+];
+const deliverNavbar = [
+  {
+    display: "Create Food",
+    path: "/food/create",
   },
 ];
 
@@ -35,11 +50,11 @@ const Header = () => {
   const menuRef = useRef(null);
   const headerRef = useRef(null);
   const totalQuantity = useSelector((state) => state.cart.totalQuantity);
-  const { user, userType } = useSelector((state) => state.auth);
+  const { userType } = useSelector((state) => state.auth);
   const [navLink, setNavLink] = useState(nav__links);
   const dispatch = useDispatch();
   const [profileStatus, setProfileStatus] = useState('none');
-
+  const authenticated = useAuth();
   const toggleCart = () => {
     dispatch(cartUiActions.toggle());
   };
@@ -57,20 +72,16 @@ const Header = () => {
         headerRef.current.classList.remove("header__shrink");
       }
     });
-
-    return () => window.removeEventListener("scroll", () => { });
+    return () => window.removeEventListener("scroll", () => {});
   }, []);
 
-  const sellerNavbar = [
-    {
-      display: "Create Food",
-      path: "/food/create",
-    },
-  ];
-
   useEffect(() => {
-    if (userType === "seller") {
-      setNavLink({ ...navLink, sellerNavbar });
+    if (userType === "buyer") {
+      setNavLink([...navLink, ...buyerNavbar]);
+    } else if (userType === "seller") {
+      setNavLink([...navLink, ...sellerNavbar]);
+    } else if (userType === "deliver") {
+      setNavLink([...navLink, ...deliverNavbar]);
     }
   }, []);
 
@@ -150,9 +161,14 @@ const Header = () => {
               </span>
 
               <span className="user">
-                {/* <Link to=''> */}
-                <i className="ri-user-line" onClick={setProfileVisible2}></i>
-                {/* </Link> */}
+
+                {authenticated ? (
+                  <i className="ri-user-line"></i>
+                ) : (
+                  <Link to="/login">
+                    <i className="ri-user-line"></i>
+                  </Link>
+                )}
               </span>
               <span className="mobile__menu" onClick={toggleMenu}>
                 <i className="ri-menu-line"></i>
@@ -168,3 +184,24 @@ const Header = () => {
 
 // const profileStatusValue = profileStatus;
 export default Header;
+
+const styles = {
+  ul: {
+    position: "fixed",
+    top: "70px",
+    listStyle: "none",
+    right: "180px",
+    borderRadius: "4px",
+    backgroundColor: "#EEE",
+    textAlign: "center",
+    paddingLeft: "0px",
+    display: "none",
+  },
+  li: {
+    backgroundColor: "#ccc",
+    padding: "5px 25px",
+    margin: "5px 0",
+    textAlign: "center",
+  },
+  a: { textDecoration: "none", color: "black", fontWeight: "700" },
+};

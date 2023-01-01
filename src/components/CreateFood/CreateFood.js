@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from "react";
+// import React, { useEffect, useState } from "react";
+import React from "react";
 import { Button, Col, Form, FormGroup, Input, Label, Row } from "reactstrap";
 import axiosInstance from "../../utils/axiosInstance";
 
@@ -25,7 +26,7 @@ function CreateFood() {
   //   getProducts();
   // });
 
-  const [value, setValue] = useState(initial_values);
+  // const [value, setValue] = useState(initial_values);
 
   return (
     <Row className="my-5">

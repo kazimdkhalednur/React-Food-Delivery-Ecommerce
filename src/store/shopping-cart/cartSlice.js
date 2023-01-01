@@ -35,18 +35,19 @@ const cartSlice = createSlice({
     // =========== add item ============
     addItem(state, action) {
       const newItem = action.payload;
-      const existingItem = state.cartItems.find(
-        (item) => item.id === newItem.id
-      );
+      const existingItem = state.cartItems.find((item) => {
+        const id = parseInt(newItem.id);
+        return item.id === id;
+      });
       state.totalQuantity++;
 
       if (!existingItem) {
         // ===== note: if you use just redux you should not mute state array instead of clone the state array, but if you use redux toolkit that will not a problem because redux toolkit clone the array behind the scene
-
+        const iD = parseInt(newItem.id);
         state.cartItems.push({
-          id: newItem.id,
+          id: iD,
           title: newItem.title,
-          image01: newItem.image01,
+          image: newItem.image,
           price: newItem.price,
           quantity: 1,
           totalPrice: newItem.price,

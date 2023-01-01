@@ -5,25 +5,50 @@ import CommonSection from "../components/UI/common-section/CommonSection";
 import Helmet from "../components/Helmet/Helmet";
 
 import "../styles/checkout.css";
+import storage from "../utils/storage";
+import axiosInstance from "../utils/axiosInstance";
 
 const Checkout = () => {
   const [enterName, setEnterName] = useState("");
-  const [enterEmail, setEnterEmail] = useState("");
+  const [enterAddress, setEnterAddress] = useState("");
   const [enterNumber, setEnterNumber] = useState("");
 
-  const shippingInfo = [];
   const TotalAmount = useSelector((state) => state.cart.totalAmount);
 
   const submitHandler = (e) => {
     e.preventDefault();
-    const userShippingAddress = {
-      name: enterName,
-      email: enterEmail,
-      phone: enterNumber,
-    };
 
-    shippingInfo.push(userShippingAddress);
-    console.log(shippingInfo);
+    const cartItems = storage.get("cartItems");
+    const createOrder = async () => {
+      await axiosInstance
+        .post("/order/", {
+          cart: cartItems,
+          address: enterAddress,
+          phone: enterNumber,
+        })
+        .then((res) => {
+          if (res.status === 201) {
+            console.log("Order Created");
+            // storage.remove("cartItems");
+            // storage.remove("totalAmount");
+            // storage.remove("totalQuantity");
+            const makePayment = async () => {
+              await axiosInstance
+                .post("/order/payment/", {
+                  id: res.data.id,
+                })
+                .then((e) => {
+                  console.log(e.data.url);
+                  window.location.replace(e.data.url);
+                })
+                .catch((e) => e.response);
+            };
+            makePayment();
+          }
+        })
+        .catch((e) => e.response);
+    };
+    createOrder();
   };
 
   return (
@@ -46,10 +71,10 @@ const Checkout = () => {
 
                 <div className="form__group">
                   <input
-                    type="email"
-                    placeholder="Enter your email"
+                    type="text"
+                    placeholder="Enter your address"
                     required
-                    onChange={(e) => setEnterEmail(e.target.value)}
+                    onChange={(e) => setEnterAddress(e.target.value)}
                   />
                 </div>
                 <div className="form__group">

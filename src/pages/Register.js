@@ -4,6 +4,7 @@ import CommonSection from "../components/UI/common-section/CommonSection";
 import { Container, Row, Col } from "reactstrap";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
+import storage from "../utils/storage";
 
 const Register = () => {
   const signupNameRef = useRef();
@@ -23,6 +24,7 @@ const Register = () => {
       })
       .then((res) => {
         if (res.status === 201) {
+          storage.set("message", "Account created successfully");
           navigate("/login");
         }
       })
