@@ -81,7 +81,7 @@ const Header = () => {
   function profileVisible() {
     return (<ul className="flex flex-col" style={styles.ul}>
       <li style={styles.li}>
-        <Link to='' style={styles.a}>
+        <Link to='/profile' style={styles.a}>
           Profile
         </Link>
       </li>
@@ -103,7 +103,7 @@ const Header = () => {
 
   const styles = {
     ul: {
-      position: "fixed", top: "70px", listStyle: "none", right: "6%", borderRadius: "4px", backgroundColor: "#EEE", textAlign: "center", paddingLeft: "0px", display: profileStatus
+      position: "fixed", top: "70px", listStyle: "none", right: "10%", borderRadius: "4px", backgroundColor: "#EEE", textAlign: "center", paddingLeft: "0px", display: profileStatus
     },
     li: { backgroundColor: "#ccc", padding: "5px 25px", margin: "5px 0", textAlign: "center" },
     a: { textDecoration: "none", color: "black", fontWeight: "700" }
