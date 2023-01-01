@@ -15,6 +15,8 @@ import AddCategory from "../components/AddCategory/AddCategory";
 import RoutePrivate from "./RoutePrivate";
 import RouteBuyer from "./BuyerRoute";
 import AdminOrderTable from "../components/AdminOrderTable/AdminOrderTable";
+import Profile from "../components/Profile/Profile";
+import EditProfile from "../components/Profile/EditProfile";
 
 const Routers = () => {
   return (
@@ -27,6 +29,8 @@ const Routers = () => {
       <Route path="/register" element={<Register />} />
       <Route path="/contact" element={<Contact />} />
       <Route path="/login" element={<Login />} />
+      <Route path="/profile" element={<Profile />} />
+      <Route path="/edit-profile" element={<EditProfile />} />
       <Route element={<RoutePrivate />}>
         <Route element={<RouteBuyer />}>
           <Route path="/order" element={<OrderTable />} />
