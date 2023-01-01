@@ -14,7 +14,9 @@ import OrderTable from "../components/OrderTable/OrderTable";
 import AddCategory from "../components/AddCategory/AddCategory";
 import RoutePrivate from "./RoutePrivate";
 import RouteBuyer from "./BuyerRoute";
-import AdminOrderTable from "../components/AdminOrderTable/AdminOrderTable";
+import RouteSeller from "./SellerRoute";
+import Admin from "../components/Admin/Admin";
+import Logout from "../pages/Logout";
 
 const Routers = () => {
   return (
@@ -27,14 +29,18 @@ const Routers = () => {
       <Route path="/register" element={<Register />} />
       <Route path="/contact" element={<Contact />} />
       <Route path="/login" element={<Login />} />
+      <Route path="/logout" element={<Logout />} />
       <Route element={<RoutePrivate />}>
         <Route element={<RouteBuyer />}>
           <Route path="/order" element={<OrderTable />} />
           <Route path="/checkout" element={<Checkout />} />
         </Route>
-        <Route path="/food/create" element={<CreateFood />} />
-        <Route path="/AdminOrderTable" element={<AdminOrderTable />} />
-        <Route path="/food/category/create" element={<AddCategory />} />
+        <Route element={<RouteSeller />}>
+          <Route path="/food/category/create" element={<AddCategory />} />
+          <Route path="/food/create" element={<CreateFood />} />
+          <Route path="/seller" element={<Admin />} />
+          <Route path="/all-foods" element={<Admin />} />
+        </Route>
       </Route>
     </Routes>
   );

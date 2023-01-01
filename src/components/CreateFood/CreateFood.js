@@ -8,7 +8,7 @@ const initial_values = {
   number: "",
   image: "",
   description: "",
-}
+};
 
 function CreateFood() {
   let createFood = async (e) => {
@@ -59,7 +59,10 @@ function CreateFood() {
               name="number"
               id="exampleNumber"
               placeholder="Prize"
-              onChange={(e) => { console.log(e.target.number.value); return e.target.number.value; }}
+              onChange={(e) => {
+                console.log(e.target.number.value);
+                return e.target.number.value;
+              }}
               value={initial_values.number}
             />
           </FormGroup>

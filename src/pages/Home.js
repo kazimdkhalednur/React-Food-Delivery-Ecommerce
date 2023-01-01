@@ -50,13 +50,15 @@ const Home = () => {
 
   useEffect(() => {
     let getFoods = async () => {
-      let response = await axiosInstance.get("");
+      let response = await axiosInstance.get("/").catch((e) => console.log(e));
       setAllProducts(response.data);
       setfilterProducts(response.data);
     };
     getFoods();
     let getCategory = async () => {
-      let response = await axiosInstance.get("category/");
+      let response = await axiosInstance
+        .get("/category/")
+        .catch((e) => console.log(e));
       setAllCategorys(response.data);
     };
     getCategory();
@@ -180,8 +182,9 @@ const Home = () => {
             <Col lg="12">
               <div className="food__category d-flex align-items-center justify-content-center gap-4">
                 <button
-                  className={`all__btn  ${category === "ALL" ? "foodBtnActive" : ""
-                    } `}
+                  className={`all__btn  ${
+                    category === "ALL" ? "foodBtnActive" : ""
+                  } `}
                   onClick={() => setCategory("ALL")}
                 >
                   All

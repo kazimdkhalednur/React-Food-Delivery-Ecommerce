@@ -16,11 +16,9 @@ const INITIAL_LOGIN_DATA = {
 };
 
 const Login = () => {
-  // window.location.reload();
-  const authenticated = useAuth();
+  const { authenticated } = useAuth();
   const baseURL = process.env.REACT_APP_SERVICE_URL;
   const [data, setData] = useState(INITIAL_LOGIN_DATA);
-  // const { count, message } = useSelector((state) => state.message);
   const msg = storage.get("message");
   const [message, setMessage] = useState(msg);
   const navigate = useNavigate();
@@ -43,7 +41,7 @@ const Login = () => {
         }
       })
       .catch((error) => {
-        console.log(error);
+        setMessage("credential is wrong");
       });
   };
   const userData = (e) => {
@@ -58,7 +56,7 @@ const Login = () => {
     if (message) {
       storage.remove("message");
     }
-  }, []);
+  }, [message]);
   console.log(message);
   return (
     <Helmet title="Login">

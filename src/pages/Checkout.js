@@ -29,9 +29,9 @@ const Checkout = () => {
         .then((res) => {
           if (res.status === 201) {
             console.log("Order Created");
-            // storage.remove("cartItems");
-            // storage.remove("totalAmount");
-            // storage.remove("totalQuantity");
+            storage.remove("cartItems");
+            storage.remove("totalAmount");
+            storage.remove("totalQuantity");
             const makePayment = async () => {
               await axiosInstance
                 .post("/order/payment/", {

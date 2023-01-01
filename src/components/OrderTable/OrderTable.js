@@ -1,54 +1,79 @@
-import React from 'react';
-import { Col, Row, Table } from 'reactstrap';
+import React, { useEffect, useState } from "react";
+import { Col, Row, Table } from "reactstrap";
 
-import Badge from 'react-bootstrap/Badge';
+import Badge from "react-bootstrap/Badge";
+import axiosInstance from "../../utils/axiosInstance";
+import { Link } from "react-router-dom";
 
 function OrderTable() {
-    return (
-        <Row className='my-3'>
-            <Col className='col-md-8 m-auto'>
-                <h1 className='mb-3 mt-5'>Order Table</h1>
-                <Table bordered>
-                    <thead>
-                        <tr>
-                            <th>Serial</th>
-                            <th>Product Name</th>
-                            <th>Status</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <th scope="row">1</th>
-                            <td>Mark</td>
-                            <td>
-                                <Badge bg="success">
-                                    Delivered
-                                </Badge>{' '}
-                            </td>
-                        </tr>
-                        <tr>
-                            <th scope="row">2</th>
-                            <td>Jacob</td>
-                            <td>
-                                <Badge bg="danger">
-                                    Pending
-                                </Badge>{' '}
-                            </td>
-                        </tr>
-                        <tr>
-                            <th scope="row">3</th>
-                            <td>Larry</td>
-                            <td>
-                                <Badge bg="success">
-                                    Delivered
-                                </Badge>{' '}
-                            </td>
-                        </tr>
-                    </tbody>
-                </Table>
-            </Col>
-        </Row>
-    )
+  const [orders, setOrders] = useState();
+  const fetchOrders = async () => {
+    const response = await axiosInstance.get("order/list");
+    setOrders(response.data);
+  };
+  useEffect(() => {
+    fetchOrders();
+  }, []);
+  return (
+    <Row className="my-3">
+      <Col className="col-md-10 m-auto">
+        <h1 className="mb-3 text-center">
+          <u>ORDER TABLE</u>
+        </h1>
+        <Table borderless hover striped responsive>
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Order ID</th>
+              <th>Products</th>
+              <th>Amount</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            {orders?.map((order, id) => (
+              <tr key={id}>
+                <th scope="row">{id + 1}</th>
+                <td>
+                  {order.pending_payment_url ? (
+                    <a href={order.pending_payment_url}>
+                      <u>{order.order_id}</u>
+                      <br />
+                      (click here for pending payment)
+                    </a>
+                  ) : (
+                    order.order_id
+                  )}
+                </td>
+                <td>
+                  {order.cart.map((item) => (
+                    <>
+                      {item.quantity} x {item.food.title}
+                      <br />
+                    </>
+                  ))}
+                </td>
+                <td>৳{order.amount}</td>
+                <td>
+                  {order.status === "pending" ? (
+                    <Badge bg="danger">Pending</Badge>
+                  ) : order.status === "paid" ? (
+                    <Badge bg="success">Paid</Badge>
+                  ) : order.status === "on_the_way" ? (
+                    <Badge bg="warning">On the way</Badge>
+                  ) : order.status === "delivered" ? (
+                    <Badge bg="primary">Delivered</Badge>
+                  ) : (
+                    ""
+                  )}
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </Table>
+      </Col>
+    </Row>
+  );
 }
 
 export default OrderTable;
