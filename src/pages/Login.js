@@ -26,7 +26,7 @@ const Login = () => {
 
   const submitHandler = async (e) => {
     e.preventDefault();
-    axios
+    await axios
       .post(`${baseURL}/accounts/login/`, data)
       .then((res) => {
         if (res.status === 200) {
@@ -56,8 +56,7 @@ const Login = () => {
     if (message) {
       storage.remove("message");
     }
-  }, [message]);
-  console.log(message);
+  }, []);
   return (
     <Helmet title="Login">
       <CommonSection title="Login" />

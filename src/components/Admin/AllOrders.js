@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useState } from "react";
-import { Badge, Col, Table } from "reactstrap";
+import { Badge, Button, Col, Table } from "reactstrap";
 import axiosInstance from "../../utils/axiosInstance";
 
 function AllOrders() {
@@ -48,11 +48,11 @@ function AllOrders() {
                 <td>৳{order.amount}</td>
                 <td>
                   {order.status === "paid" ? (
-                    <Badge bg="success">Paid</Badge>
+                    <Button color="success">Paid</Button>
                   ) : order.status === "on_the_way" ? (
-                    <Badge bg="warning">On the way</Badge>
+                    <Button color="warning">On the way</Button>
                   ) : order.status === "delivered" ? (
-                    <Badge bg="primary">Delivered</Badge>
+                    <Button color="primary">Delivered</Button>
                   ) : (
                     ""
                   )}
@@ -61,8 +61,8 @@ function AllOrders() {
             ))
           ) : (
             <>
-              <tr rowspan="4" className="my-3">
-                <td colspan="5" className="text-center">
+              <tr rowSpan="4" className="my-3">
+                <td colSpan="5" className="text-center">
                   <h4>No order available</h4>
                 </td>
               </tr>

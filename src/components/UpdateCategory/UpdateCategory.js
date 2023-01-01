@@ -1,35 +1,55 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import { Button, Col, Form, FormGroup, Input, Label, Row } from "reactstrap";
 import axiosInstance from "../../utils/axiosInstance";
 import storage from "../../utils/storage";
 
-function AddCategory() {
+function UpdateCategory() {
   const [title, setTitle] = useState("");
-  const [image, setImage] = useState("");
+  const [image, setImage] = useState(undefined);
+  const [oldImage, setOLDImage] = useState("");
   const navigate = useNavigate();
+  const { id } = useParams();
   let form_data = new FormData();
   form_data.append("title", title);
-  form_data.append("image", image);
+  if (image !== undefined) {
+    form_data.append("image", image);
+  }
+
   const submitHandler = async (e) => {
     e.preventDefault();
 
-    console.log(image);
     const response = await axiosInstance
-      .post("/category/create/", form_data)
+      .put(`/category/${id}/`, form_data)
       .catch((e) => {
         console.log(e.response);
       });
-    console.log(response);
-    if (response.status === 201) {
-      storage.set("message", "Category created successfully");
+    if (response.status === 200) {
+      storage.set("message", "Category updated successfully");
       navigate("/seller");
     }
   };
+
+  const fetchCategory = async () => {
+    await axiosInstance
+      .get(`/category/${id}/`)
+      .then((res) => {
+        setTitle(res.data.title);
+        setOLDImage(res.data.image);
+      })
+      .catch((e) => {
+        console.log(e.response);
+      });
+  };
+
+  useEffect(() => {
+    fetchCategory();
+  }, []);
+
   return (
     <Row className="my-5">
       <h2 className="text-center mb-5">
-        <u>Create A New Food Category</u>
+        <u>Update Food Category</u>
       </h2>
       <Col className="col-md-6 m-auto">
         <Form onSubmit={submitHandler} encType="multipart/form-data">
@@ -60,4 +80,4 @@ function AddCategory() {
   );
 }
 
-export default AddCategory;
+export default UpdateCategory;

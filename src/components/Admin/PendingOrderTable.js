@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Badge, Col, Table } from "reactstrap";
+import { Badge, Button, Col, Table } from "reactstrap";
 import axiosInstance from "../../utils/axiosInstance";
 
 function PendingOrderTable() {
@@ -45,15 +45,13 @@ function PendingOrderTable() {
                   ))}
                 </td>
                 <td>৳{order.amount}</td>
-                <td>
-                  <Badge bg="danger">{order.status}</Badge>{" "}
-                </td>
+                <td></td>
               </tr>
             ))
           ) : (
             <>
-              <tr rowspan="4" className="my-3">
-                <td colspan="5" className="text-center">
+              <tr rowSpan="4" className="my-3">
+                <td colSpan="5" className="text-center">
                   <h4>No pending order available</h4>
                 </td>
               </tr>

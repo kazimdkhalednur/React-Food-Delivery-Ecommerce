@@ -29,20 +29,44 @@ const nav__links = [
 ];
 const buyerNavbar = [
   {
+    display: "Home",
+    path: "/home",
+  },
+  {
+    display: "Foods",
+    path: "/foods",
+  },
+  {
+    display: "Cart",
+    path: "/cart",
+  },
+  {
+    display: "Contact",
+    path: "/contact",
+  },
+  {
     display: "Order",
     path: "/order",
   },
 ];
 const sellerNavbar = [
   {
-    display: "Admin",
+    display: "Home",
+    path: "/home",
+  },
+  {
+    display: "Foods",
+    path: "/foods",
+  },
+  {
+    display: "Dashboard",
     path: "/seller",
   },
 ];
 const deliverNavbar = [
   {
-    display: "Create Food",
-    path: "/food/create",
+    display: "Dashboard",
+    path: "/deliver-table",
   },
 ];
 
@@ -83,23 +107,19 @@ const Header = () => {
 
   useEffect(() => {
     if (userType === "buyer") {
-      setNavLink([...navLink, ...buyerNavbar]);
+      setNavLink([...buyerNavbar]);
     } else if (userType === "seller") {
-      setNavLink([...navLink, ...sellerNavbar]);
+      setNavLink([...sellerNavbar]);
     } else if (userType === "deliver") {
-      setNavLink([...navLink, ...deliverNavbar]);
+      setNavLink([...deliverNavbar]);
     }
   }, []);
-
-  // useEffect(() => {
-
-  // }, [profileStatus]);
 
   function profileVisible() {
     return (
       <ul className="flex flex-col" style={styles.ul}>
         <li style={styles.li}>
-          <Link to="" style={styles.a}>
+          <Link to="/profile" style={styles.a}>
             Profile
           </Link>
         </li>

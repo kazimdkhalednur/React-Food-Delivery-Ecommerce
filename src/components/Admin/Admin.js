@@ -1,18 +1,30 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { Col, Row } from "reactstrap";
+import { Alert, Col, Row } from "reactstrap";
 import AllOrders from "./AllOrders";
 import AllFoods from "./AllFoods";
 import PendingOrderTable from "./PendingOrderTable";
 import AllCategories from "./AllCategories";
-
-// Ei Page e Current Orders er List Mapping
+import storage from "../../utils/storage";
 
 const Admin = ({ navlink }) => {
   const [orderStatus, setOrderStatus] = useState("pendingorder");
+  const msg = storage.get("message");
+  const [message, setMessage] = useState(msg);
+
+  useEffect(() => {
+    if (message) {
+      storage.remove("message");
+    }
+  }, [message]);
   return (
     <Row className="my-3">
+      {message ? (
+        <Alert className="text-center" color="primary">
+          {message}
+        </Alert>
+      ) : undefined}
       <Col className="col-md-2" style={styles.col}>
         <div>
           <ul style={styles.ul}>
