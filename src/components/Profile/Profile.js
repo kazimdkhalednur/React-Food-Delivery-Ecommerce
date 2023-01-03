@@ -1,8 +1,19 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "reactstrap";
+import axiosInstance from "../../utils/axiosInstance";
 
 function Profile() {
+  const [userData, setUserData] = useState();
+  const getUserData = async () => {
+    let response = await axiosInstance.get("/accounts/detail/");
+    setUserData(response.data);
+  };
+
+  useEffect(() => {
+    getUserData();
+  }, []);
+
   return (
     <div style={styles.card_wrapper}>
       <Link style={styles.link} to="/edit-profile">
@@ -11,15 +22,20 @@ function Profile() {
       <div style={styles.card}>
         <div style={styles.profile_image_circle}>
           <img
-            src="https://cdn-icons-png.flaticon.com/512/149/149071.png"
+            src={
+              userData?.img === null
+                ? "https://cdn-icons-png.flaticon.com/512/149/149071.png"
+                : userData?.img
+            }
             alt="Profile Picture"
             style={styles.profile_image}
           />
         </div>
         <div style={styles.info}>
-          <h4>John Dev</h4>
-          <h6>johndev@hotmail.com</h6>
-          <h6>41 Manchester Street Saint Johns, FL 32259</h6>
+          <h4>{userData?.full_name}</h4>
+          <h6>{userData?.email}</h6>
+          <h6>{userData?.address}</h6>
+          <h6>{userData?.phone}</h6>
         </div>
       </div>
     </div>
