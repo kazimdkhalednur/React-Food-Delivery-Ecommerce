@@ -104,6 +104,11 @@ const Header = () => {
     });
     return () => window.removeEventListener("scroll", () => {});
   }, []);
+  window.addEventListener("click", (e) => {
+    if (!e.target.id && e.target.id !== "profileMenu") {
+      setProfileStatus("none");
+    }
+  });
 
   useEffect(() => {
     if (userType === "buyer") {
@@ -115,36 +120,12 @@ const Header = () => {
     }
   }, []);
 
-  function profileVisible() {
-    return (
-      <ul className="flex flex-col" style={styles.ul}>
-        <li style={styles.li}>
-          <Link to="/profile" style={styles.a}>
-            Profile
-          </Link>
-        </li>
-        <li style={styles.li}>
-          <Link to="/logout" style={styles.a}>
-            Logout
-          </Link>
-        </li>
-      </ul>
-    );
-  }
-
-  function setProfileVisible2() {
-    if (profileStatus === "none") {
-      setProfileStatus("block");
-    } else {
-      setProfileStatus("none");
-    }
-  }
   const styles = {
     ul: {
-      position: "fixed",
+      position: "absolute",
       top: "70px",
       listStyle: "none",
-      right: "6%",
+      right: "0",
       borderRadius: "4px",
       backgroundColor: "#EEE",
       textAlign: "center",
@@ -153,12 +134,35 @@ const Header = () => {
     },
     li: {
       backgroundColor: "#ccc",
-      padding: "5px 25px",
+      padding: "0 25px",
       margin: "5px 0",
       textAlign: "center",
     },
     a: { textDecoration: "none", color: "black", fontWeight: "700" },
   };
+
+  function profileVisible() {
+    return (
+      <div className="lineHeight">
+        <ul
+          className="flex flex-col profileMenu"
+          style={styles.ul}
+          id="profileMenu"
+        >
+          <li style={styles.li}>
+            <Link to="/profile" style={styles.a}>
+              Profile
+            </Link>
+          </li>
+          <li style={styles.li}>
+            <Link to="/logout" style={styles.a}>
+              Logout
+            </Link>
+          </li>
+        </ul>
+      </div>
+    );
+  }
 
   return (
     <>
@@ -201,8 +205,9 @@ const Header = () => {
 
               <span className="user">
                 {authenticated ? (
-                  <div onClick={setProfileVisible2}>
-                    <i className="ri-user-line"></i>
+                  <div onClick={() => setProfileStatus("")} className="iconDiv">
+                    <i className="ri-user-line" id="profileIcon2"></i>
+                    {profileVisible()}
                   </div>
                 ) : (
                   <Link to="/login">
@@ -217,7 +222,6 @@ const Header = () => {
           </div>
         </Container>
       </header>
-      {profileVisible()}
     </>
   );
 };

@@ -9,9 +9,9 @@ import Checkout from "../pages/Checkout";
 import Contact from "../pages/Contact";
 import Login from "../pages/Login";
 import Register from "../pages/Register";
-import CreateFood from "../components/CreateFood/CreateFood";
-import OrderTable from "../components/OrderTable/OrderTable";
-import AddCategory from "../components/AddCategory/AddCategory";
+import CreateFood from "../components/Admin/CreateFood";
+import OrderTable from "../components/User/OrderTable";
+import AddCategory from "../components/Admin/AddCategory";
 import RoutePrivate from "./RoutePrivate";
 import RouteBuyer from "./BuyerRoute";
 import RouteSeller from "./SellerRoute";
@@ -19,9 +19,9 @@ import Admin from "../components/Admin/Admin";
 import Logout from "../pages/Logout";
 import Profile from "../components/Profile/Profile";
 import EditProfile from "../components/Profile/EditProfile";
-import UpdateCategory from "../components/UpdateCategory/UpdateCategory";
+import UpdateCategory from "../components/Admin/UpdateCategory";
 import RouteDeliver from "./RouteDeliver";
-import Table from "../components/DeliverTable/Table";
+import Table from "../components/Deliver/Table";
 
 const Routers = () => {
   return (
