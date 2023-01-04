@@ -1,16 +1,18 @@
 import React, { useState, useEffect } from "react";
-
-import products from "../assets/fake-data/products";
 import { useParams } from "react-router-dom";
 import Helmet from "../components/Helmet/Helmet";
 import CommonSection from "../components/UI/common-section/CommonSection";
-import { Container, Row, Col, FormGroup, Label, Input } from "reactstrap";
-
+import {
+  Container,
+  Row,
+  Col,
+  FormGroup,
+  Label,
+  Input,
+} from "reactstrap";
 import { useDispatch } from "react-redux";
 import { cartActions } from "../store/shopping-cart/cartSlice";
-
 import "../styles/food-details.css";
-
 import ProductCard from "../components/UI/product-card/ProductCard";
 import axiosInstance from "../utils/axiosInstance";
 
@@ -19,7 +21,7 @@ const FoodDetails = () => {
   const [product, setProduct] = useState();
   const [allProducts, setAllProducts] = useState();
   const [allReviews, setAllReviews] = useState();
-  const [active, setAactive] = useState(false);
+  const [active, setActive] = useState(false);
   const [rating, setRating] = useState(5);
   const [review, setReview] = useState();
   const { id } = useParams();
@@ -49,7 +51,7 @@ const FoodDetails = () => {
         console.log(e);
       });
     console.log(response.data);
-    setAactive(response.data.msg);
+    setActive(response.data.msg);
   };
 
   useEffect(() => {
@@ -57,7 +59,7 @@ const FoodDetails = () => {
     getFood();
     getReviews();
     checkReviews();
-  }, []);
+  }, [active]);
 
   const relatedProduct = allProducts?.filter(
     (item) => category === item.category.title
@@ -124,9 +126,9 @@ const FoodDetails = () => {
         id: id,
       })
       .then((res) => {
-        console.log(res);
-        if (res.msg === "success") {
-          getReviews();
+        if (res.data.msg === "success") {
+          setActive(false);
+          getAllReview();
         }
       })
       .catch((e) => {
@@ -134,10 +136,67 @@ const FoodDetails = () => {
       });
   };
 
+  const getAllReview = () => {
+    return (
+      <div className="tab__form mb-3">
+        {allReviews?.map((item) => (
+          <div className="review pt-5">
+            <p className="user__name mb-0 flex">
+              {item.name} &nbsp; &nbsp; &nbsp; &nbsp; {"   "}
+              {Rating(item.rating)}
+            </p>
+
+            <p className="feedback__text">{item.review}</p>
+          </div>
+        ))}
+        {active ? (
+          <form
+            className="form"
+            onSubmit={submitHandler}
+            style={{ marginTop: "10vh" }}
+          >
+            <FormGroup className="form__group">
+              <Label for="exampleSelect">Rating</Label>
+              <Input
+                id="exampleSelect"
+                name="rating"
+                type="select"
+                value={rating}
+                onChange={(e) => {
+                  setRating(e.target.value);
+                }}
+              >
+                <option>1</option>
+                <option>2</option>
+                <option>3</option>
+                <option>4</option>
+                <option selected>5</option>
+              </Input>
+            </FormGroup>
+            <div className="form__group">
+              <textarea
+                rows={5}
+                type="text"
+                placeholder="Write your review"
+                required
+                onChange={(e) => {
+                  setReview(e.target.value);
+                }}
+              />
+            </div>
+
+            <button type="submit" className="addTOCart__btn">
+              Submit
+            </button>
+          </form>
+        ) : undefined}
+      </div>
+    );
+  };
+
   return (
     <Helmet title="Product-details">
       <CommonSection title={title} />
-
       <section>
         <Container>
           <Row>
@@ -184,60 +243,7 @@ const FoodDetails = () => {
                   <p>{description}</p>
                 </div>
               ) : (
-                <div className="tab__form mb-3">
-                  {allReviews?.map((item) => (
-                    <div className="review pt-5">
-                      <p className="user__name mb-0 flex">
-                        {item.cart.user.full_name} &nbsp; &nbsp; &nbsp; &nbsp;{" "}
-                        {"   "}
-                        {Rating(item.rating)}
-                      </p>
-
-                      <p className="feedback__text">{item.review}</p>
-                    </div>
-                  ))}
-                  {active ? (
-                    <form
-                      className="form"
-                      onSubmit={submitHandler}
-                      style={{ marginTop: "10vh" }}
-                    >
-                      <FormGroup className="form__group">
-                        <Label for="exampleSelect">Rating</Label>
-                        <Input
-                          id="exampleSelect"
-                          name="rating"
-                          type="select"
-                          value={rating}
-                          onChange={(e) => {
-                            setRating(e.target.value);
-                          }}
-                        >
-                          <option>1</option>
-                          <option>2</option>
-                          <option>3</option>
-                          <option>4</option>
-                          <option selected>5</option>
-                        </Input>
-                      </FormGroup>
-                      <div className="form__group">
-                        <textarea
-                          rows={5}
-                          type="text"
-                          placeholder="Write your review"
-                          required
-                          onChange={(e) => {
-                            setReview(e.target.value);
-                          }}
-                        />
-                      </div>
-
-                      <button type="submit" className="addTOCart__btn">
-                        Submit
-                      </button>
-                    </form>
-                  ) : undefined}
-                </div>
+                getAllReview()
               )}
             </Col>
 
