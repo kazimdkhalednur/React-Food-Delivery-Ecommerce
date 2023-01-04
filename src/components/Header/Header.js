@@ -22,10 +22,6 @@ const nav__links = [
     display: "Cart",
     path: "/cart",
   },
-  {
-    display: "Contact",
-    path: "/contact",
-  },
 ];
 const buyerNavbar = [
   {
@@ -39,10 +35,6 @@ const buyerNavbar = [
   {
     display: "Cart",
     path: "/cart",
-  },
-  {
-    display: "Contact",
-    path: "/contact",
   },
   {
     display: "Order",

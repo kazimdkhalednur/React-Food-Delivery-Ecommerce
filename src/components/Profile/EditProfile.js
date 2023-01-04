@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Navigate, useNavigate } from "react-router-dom";
 import { Button, Col, Form, FormGroup, Input, Label, Row } from "reactstrap";
 import axiosInstance from "../../utils/axiosInstance";
+import storage from "../../utils/storage";
 
 function EditProfile() {
   const navigate = useNavigate();
@@ -9,37 +10,40 @@ function EditProfile() {
   const [email, setEmail] = useState();
   const [address, setAddress] = useState();
   const [phone, setPhone] = useState();
-  const [image, setImage] = useState();
+  const [image, setImage] = useState(null);
+  const [oldImage, setOldImage] = useState(null);
+  const [check, setCheck] = useState(false);
   const getUserData = async () => {
     let response = await axiosInstance.get("/accounts/detail/");
     setFullName(response.data.full_name);
     setEmail(response.data.email);
     setAddress(response.data.address);
     setPhone(response.data.phone);
-    setImage(response.data.img);
+    setOldImage(response.data.img);
   };
 
   useEffect(() => {
     getUserData();
   }, []);
 
-  let form_data = new FormData();
-  form_data.append("img", image);
-
   const submitHandler = async (e) => {
     e.preventDefault();
-    console.log(form_data);
+    let form_data = new FormData();
+    form_data.append("full_name", fullName);
+    form_data.append("email", email);
+    form_data.append("address", address);
+    form_data.append("phone", phone);
+    if (image !== null) {
+      form_data.append("img", image);
+    }
+    if (check) {
+      form_data.append("img", "");
+    }
     await axiosInstance
-      .put("/accounts/detail/", {
-        full_name: fullName,
-        email: email,
-        address: address,
-        phone: phone,
-        img: form_data.img,
-      })
+      .put("/accounts/detail/", form_data)
       .then((res) => {
-        console.log(res);
         if (res.status === 200) {
+          storage.set("message", "Profile updated successfully");
           navigate("/profile");
         }
       })
@@ -47,6 +51,7 @@ function EditProfile() {
         console.log(e);
       });
   };
+
   return (
     <Row className="my-5">
       <Col className="col-md-6 m-auto">
@@ -102,11 +107,32 @@ function EditProfile() {
           </FormGroup>
           <FormGroup>
             <Label for="exampleFile">Profile Picture</Label>
+            {oldImage ? (
+              <div style={{ fontSize: "13px", display: "flex" }}>
+                <div>{oldImage}&nbsp; &nbsp; &nbsp; &nbsp;</div>
+                <div>
+                  <FormGroup check>
+                    <Input
+                      type="checkbox"
+                      onChange={(e) => {
+                        setCheck(e.target.value);
+                      }}
+                    />
+                    <Label check>clear</Label>
+                  </FormGroup>
+                </div>
+              </div>
+            ) : (
+              ""
+            )}
+
             <Input
               type="file"
               name="file"
               id="exampleFile"
-              onChange={(e) => setImage(e.target.value)}
+              onChange={(e) => {
+                setImage(e.target.files[0]);
+              }}
             />
           </FormGroup>
           <Button color="primary">Update</Button>{" "}

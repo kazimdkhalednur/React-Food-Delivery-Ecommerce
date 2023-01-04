@@ -32,7 +32,6 @@ const Routers = () => {
       <Route path="/foods/:id" element={<FoodDetails />} />
       <Route path="/cart" element={<Cart />} />
       <Route path="/register" element={<Register />} />
-      <Route path="/contact" element={<Contact />} />
       <Route path="/login" element={<Login />} />
       <Route element={<RoutePrivate />}>
         <Route path="/logout" element={<Logout />} />

@@ -3,6 +3,7 @@ import { Alert, Col, Row, Table } from "reactstrap";
 
 import Badge from "react-bootstrap/Badge";
 import axiosInstance from "../../utils/axiosInstance";
+import storage from "../../utils/storage";
 
 function OrderTable() {
   const [orders, setOrders] = useState();
@@ -23,6 +24,7 @@ function OrderTable() {
   useEffect(() => {
     setTimeout(() => {
       setIsAlertVisible(false);
+      storage.remove("message");
     }, 3000);
   });
 
