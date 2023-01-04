@@ -39,6 +39,12 @@ const FoodDetails = () => {
       setAllReviews(response.data);
     };
     getReviews();
+    let checkReviews = async () => {
+      let response = await axiosInstance.get(`check-review/${id}/`);
+      console.log(response.data);
+      // setAllReviews(response.data);
+    };
+    checkReviews();
   }, []);
   const title = product?.title;
   const category = product?.category.title;

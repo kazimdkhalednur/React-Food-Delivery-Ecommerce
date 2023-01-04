@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { Col, Row, Table } from "reactstrap";
+import { Alert, Col, Row, Table } from "reactstrap";
 
 import Badge from "react-bootstrap/Badge";
 import axiosInstance from "../../utils/axiosInstance";
-import { Link } from "react-router-dom";
 
 function OrderTable() {
   const [orders, setOrders] = useState();
@@ -11,12 +10,28 @@ function OrderTable() {
     const response = await axiosInstance.get("order/list");
     setOrders(response.data);
   };
+  const params = new Proxy(new URLSearchParams(window.location.search), {
+    get: (searchParams, prop) => searchParams.get(prop),
+  });
+
+  let success = params.success;
   useEffect(() => {
     fetchOrders();
   }, []);
+
+  const [isAlertVisible, setIsAlertVisible] = useState(true);
+  useEffect(() => {
+    setTimeout(() => {
+      setIsAlertVisible(false);
+    }, 3000);
+  });
+
   return (
     <Row className="my-3">
       <Col className="col-md-10 m-auto">
+        {success && isAlertVisible ? (
+          <Alert color="primary">Order placed successfully</Alert>
+        ) : undefined}
         <h1 className="mb-3 text-center">
           <u>ORDER TABLE</u>
         </h1>

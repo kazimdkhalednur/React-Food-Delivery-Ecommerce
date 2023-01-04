@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { Container, Row, Col } from "reactstrap";
 import CommonSection from "../components/UI/common-section/CommonSection";
@@ -12,6 +12,18 @@ const Checkout = () => {
   const [enterName, setEnterName] = useState("");
   const [enterAddress, setEnterAddress] = useState("");
   const [enterNumber, setEnterNumber] = useState("");
+  const [userData, setUserData] = useState();
+  const getUserData = async () => {
+    let response = await axiosInstance.get("/accounts/detail/");
+    setUserData(response.data);
+    setEnterName(response.data.full_name);
+    setEnterAddress(response.data.address);
+    setEnterNumber(response.data.phone);
+  };
+
+  useEffect(() => {
+    getUserData();
+  }, []);
 
   const TotalAmount = useSelector((state) => state.cart.totalAmount);
 
@@ -65,6 +77,7 @@ const Checkout = () => {
                     type="text"
                     placeholder="Enter your name"
                     required
+                    value={enterName}
                     onChange={(e) => setEnterName(e.target.value)}
                   />
                 </div>
@@ -74,6 +87,7 @@ const Checkout = () => {
                     type="text"
                     placeholder="Enter your address"
                     required
+                    value={enterAddress}
                     onChange={(e) => setEnterAddress(e.target.value)}
                   />
                 </div>
@@ -82,10 +96,10 @@ const Checkout = () => {
                     type="number"
                     placeholder="Phone number"
                     required
+                    value={enterNumber}
                     onChange={(e) => setEnterNumber(e.target.value)}
                   />
                 </div>
-
                 <button type="submit" className="addTOCart__btn">
                   Payment
                 </button>
