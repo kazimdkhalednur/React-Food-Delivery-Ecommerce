@@ -2,26 +2,19 @@ import React, { useState, useEffect } from "react";
 
 import Helmet from "../components/Helmet/Helmet.js";
 import { Container, Row, Col, ListGroup, ListGroupItem } from "reactstrap";
-
 import heroImg from "../assets/images/hero.png";
 import "../styles/hero-section.css";
-
 import { Link } from "react-router-dom";
-
 import "../styles/home.css";
-
 import ProductCard from "../components/UI/product-card/ProductCard";
-
 import whyImg from "../assets/images/location.png";
-
 import networkImg from "../assets/images/network.png";
-
 import TestimonialSlider from "../components/UI/slider/TestimonialSlider";
-
 import featureImg01 from "../assets/images/service-01.png";
 import featureImg02 from "../assets/images/service-02.png";
 import featureImg03 from "../assets/images/service-03.png";
 import axiosInstance from "../utils/axiosInstance.js";
+import useAuth from "../hooks/useAuth";
 
 const featureData = [
   {
@@ -43,6 +36,7 @@ const featureData = [
 ];
 
 const Home = () => {
+  const { userType } = useAuth();
   const [category, setCategory] = useState("ALL");
   const [allCategorys, setAllCategorys] = useState();
   const [allProducts, setAllProducts] = useState();
@@ -96,9 +90,13 @@ const Home = () => {
                 </p>
 
                 <div className="hero__btns d-flex align-items-center gap-5 mt-4">
-                  <button className="order__btn d-flex align-items-center justify-content-between">
-                    Order now <i className="ri-arrow-right-s-line"></i>
-                  </button>
+                  {userType === "seller" ? (
+                    ""
+                  ) : (
+                    <button className="order__btn d-flex align-items-center justify-content-between">
+                      Order now <i className="ri-arrow-right-s-line"></i>
+                    </button>
+                  )}
 
                   <button className="all__foods-btn">
                     <Link to="/foods">See all foods</Link>

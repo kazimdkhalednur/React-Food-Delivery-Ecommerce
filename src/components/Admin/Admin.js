@@ -2,25 +2,27 @@ import React, { useEffect } from "react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Alert, Col, Row } from "reactstrap";
-import AllOrders from "./AllOrders";
-import AllFoods from "./AllFoods";
-import PendingOrderTable from "./PendingOrderTable";
-import AllCategories from "./AllCategories";
+import AllOrders from "./Order/AllOrders";
+import AllFoods from "./Food/AllFoods";
+import PendingOrderTable from "./Order/PendingOrderTable";
+import AllCategories from "./Category/AllCategories";
 import storage from "../../utils/storage";
 
 const Admin = ({ navlink }) => {
-  const [orderStatus, setOrderStatus] = useState("pendingorder");
+  const [navLink, setNavLink] = useState(navlink);
+  const [isAlertVisible, setIsAlertVisible] = useState(true);
   const msg = storage.get("message");
   const [message, setMessage] = useState(msg);
 
   useEffect(() => {
-    if (message) {
+    setTimeout(() => {
+      setIsAlertVisible(false);
       storage.remove("message");
-    }
+    }, 3000);
   }, [message]);
   return (
     <Row className="my-3">
-      {message ? (
+      {message && isAlertVisible ? (
         <Alert className="text-center" color="primary">
           {message}
         </Alert>
@@ -32,7 +34,7 @@ const Admin = ({ navlink }) => {
               <Link
                 to="/seller"
                 style={styles.link}
-                onClick={() => setOrderStatus("pendingorder")}
+                onClick={() => setNavLink("pendingorder")}
               >
                 Pending Orders
               </Link>
@@ -41,7 +43,7 @@ const Admin = ({ navlink }) => {
               <Link
                 to="/seller"
                 style={styles.link}
-                onClick={() => setOrderStatus("allorders")}
+                onClick={() => setNavLink("allorders")}
               >
                 All Orders
               </Link>
@@ -50,7 +52,7 @@ const Admin = ({ navlink }) => {
               <Link
                 to="/seller"
                 style={styles.link}
-                onClick={() => setOrderStatus("allfoods")}
+                onClick={() => setNavLink("allfoods")}
               >
                 All Foods
               </Link>
@@ -59,7 +61,7 @@ const Admin = ({ navlink }) => {
               <Link
                 to="/seller"
                 style={styles.link}
-                onClick={() => setOrderStatus("allcategories")}
+                onClick={() => setNavLink("allcategories")}
               >
                 All Categories
               </Link>
@@ -67,13 +69,13 @@ const Admin = ({ navlink }) => {
           </ul>
         </div>
       </Col>
-      {orderStatus === "pendingorder" ? (
+      {navLink === "pendingorder" ? (
         <PendingOrderTable />
-      ) : orderStatus === "allorders" ? (
+      ) : navLink === "allorders" ? (
         <AllOrders />
-      ) : orderStatus === "allfoods" ? (
+      ) : navLink === "allfoods" ? (
         <AllFoods />
-      ) : orderStatus === "allcategories" ? (
+      ) : navLink === "allcategories" ? (
         <AllCategories />
       ) : (
         ""

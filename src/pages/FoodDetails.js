@@ -2,21 +2,16 @@ import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import Helmet from "../components/Helmet/Helmet";
 import CommonSection from "../components/UI/common-section/CommonSection";
-import {
-  Container,
-  Row,
-  Col,
-  FormGroup,
-  Label,
-  Input,
-} from "reactstrap";
+import { Container, Row, Col, FormGroup, Label, Input } from "reactstrap";
 import { useDispatch } from "react-redux";
 import { cartActions } from "../store/shopping-cart/cartSlice";
 import "../styles/food-details.css";
 import ProductCard from "../components/UI/product-card/ProductCard";
 import axiosInstance from "../utils/axiosInstance";
+import useAuth from "../hooks/useAuth";
 
 const FoodDetails = () => {
+  const { userType } = useAuth();
   const [tab, setTab] = useState("desc");
   const [product, setProduct] = useState();
   const [allProducts, setAllProducts] = useState();
@@ -31,6 +26,7 @@ const FoodDetails = () => {
   const image = product?.image;
   const price = product?.price;
   const description = product?.description;
+  const status = product?.is_visible;
 
   let getFoods = async () => {
     let response = await axiosInstance.get("");
@@ -196,69 +192,89 @@ const FoodDetails = () => {
 
   return (
     <Helmet title="Product-details">
-      <CommonSection title={title} />
-      <section>
-        <Container>
-          <Row>
-            <Col lg="4" md="4">
-              <div className="product__main-img ">
-                <img src={image} alt="" className="w-100" />
-              </div>
-            </Col>
+      {status ? (
+        <>
+          <CommonSection title={title} />
+          <section>
+            <Container>
+              <Row>
+                <Col lg="4" md="4">
+                  <div className="product__main-img ">
+                    <img src={image} alt="" className="w-100" />
+                  </div>
+                </Col>
 
-            <Col lg="6" md="6">
-              <div className="single__product-content mt-5 offset-2">
-                <h2 className="product__title mb-3">{title}</h2>
-                <p className="product__price">
-                  Price: <span>৳{price}</span>
-                </p>
-                <p className="category mb-5">
-                  Category: <span>{category}</span>
-                </p>
+                <Col lg="6" md="6">
+                  <div className="single__product-content mt-5 offset-2">
+                    <h2 className="product__title mb-3">{title}</h2>
+                    <p className="product__price">
+                      Price: <span>৳{price}</span>
+                    </p>
+                    <p className="category mb-5">
+                      Category: <span>{category}</span>
+                    </p>
+                    {userType === "seller" ? (
+                      ""
+                    ) : (
+                      <button className="addTOCart__btn" onClick={addItem}>
+                        Add to Cart
+                      </button>
+                    )}
+                  </div>
+                </Col>
 
-                <button onClick={addItem} className="addTOCart__btn">
-                  Add to Cart
-                </button>
-              </div>
-            </Col>
+                <Col lg="12">
+                  <div className="tabs d-flex align-items-center gap-5 py-3">
+                    <h6
+                      className={` ${tab === "desc" ? "tab__active" : ""}`}
+                      onClick={() => setTab("desc")}
+                    >
+                      Description
+                    </h6>
+                    <h6
+                      className={` ${tab === "rev" ? "tab__active" : ""}`}
+                      onClick={() => setTab("rev")}
+                    >
+                      Review
+                    </h6>
+                  </div>
 
-            <Col lg="12">
-              <div className="tabs d-flex align-items-center gap-5 py-3">
-                <h6
-                  className={` ${tab === "desc" ? "tab__active" : ""}`}
-                  onClick={() => setTab("desc")}
-                >
-                  Description
-                </h6>
-                <h6
-                  className={` ${tab === "rev" ? "tab__active" : ""}`}
-                  onClick={() => setTab("rev")}
-                >
-                  Review
-                </h6>
-              </div>
+                  {tab === "desc" ? (
+                    <div className="tab__content">
+                      <p>{description}</p>
+                    </div>
+                  ) : (
+                    getAllReview()
+                  )}
+                </Col>
 
-              {tab === "desc" ? (
-                <div className="tab__content">
-                  <p>{description}</p>
-                </div>
-              ) : (
-                getAllReview()
-              )}
-            </Col>
+                <Col lg="12" className="mb-5 mt-4">
+                  <h2 className="related__Product-title">
+                    You might also like
+                  </h2>
+                </Col>
 
-            <Col lg="12" className="mb-5 mt-4">
-              <h2 className="related__Product-title">You might also like</h2>
-            </Col>
-
-            {relatedProduct?.map((item) => (
-              <Col lg="3" md="4" sm="6" xs="6" className="mb-4" key={item.id}>
-                <ProductCard item={item} />
-              </Col>
-            ))}
-          </Row>
-        </Container>
-      </section>
+                {relatedProduct?.map((item) => (
+                  <Col
+                    lg="3"
+                    md="4"
+                    sm="6"
+                    xs="6"
+                    className="mb-4"
+                    key={item.id}
+                  >
+                    <ProductCard item={item} />
+                  </Col>
+                ))}
+              </Row>
+            </Container>
+          </section>
+        </>
+      ) : (
+        <h1 className="text-center" style={{ padding: "90px 0", color: "red" }}>
+          Wrong Link.......
+        </h1>
+      )}
     </Helmet>
   );
 };

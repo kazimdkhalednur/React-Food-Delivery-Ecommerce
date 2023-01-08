@@ -1,7 +1,8 @@
 import React, { useEffect } from "react";
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import { Badge, Button, Col, Table } from "reactstrap";
-import axiosInstance from "../../utils/axiosInstance";
+import axiosInstance from "../../../utils/axiosInstance";
 
 function AllOrders() {
   const [orders, setOrders] = useState();
@@ -28,7 +29,8 @@ function AllOrders() {
             <th>Address</th>
             <th>Products</th>
             <th>Amount</th>
-            <th>Status</th>
+            <th className="text-center">Status</th>
+            <th></th>
           </tr>
         </thead>
         <tbody>
@@ -46,16 +48,27 @@ function AllOrders() {
                   ))}
                 </td>
                 <td>৳{order.amount}</td>
-                <td>
+                <td className="text-center">
                   {order.status === "paid" ? (
-                    <Button color="success">Paid</Button>
+                    <h5>
+                      <Badge color="success">Paid</Badge>
+                    </h5>
                   ) : order.status === "on_the_way" ? (
-                    <Button color="warning">On the way</Button>
+                    <h5>
+                      <Badge color="warning">On the way</Badge>
+                    </h5>
                   ) : order.status === "delivered" ? (
-                    <Button color="primary">Delivered</Button>
+                    <h5>
+                      <Badge color="primary">Delivered</Badge>
+                    </h5>
                   ) : (
                     ""
                   )}
+                </td>
+                <td>
+                  <Button color="success">
+                    <Link to={`/food/update/${order.id}`}>EDIT</Link>
+                  </Button>
                 </td>
               </tr>
             ))

@@ -6,12 +6,12 @@ import AllFoods from "../pages/AllFoods";
 import FoodDetails from "../pages/FoodDetails";
 import Cart from "../pages/Cart";
 import Checkout from "../pages/Checkout";
-import Contact from "../pages/Contact";
 import Login from "../pages/Login";
 import Register from "../pages/Register";
-import CreateFood from "../components/Admin/CreateFood";
+import CreateFood from "../components/Admin/Food/CreateFood";
+import UpdateFood from "../components/Admin/Food/UpdateFood.js";
 import OrderTable from "../components/User/OrderTable";
-import AddCategory from "../components/Admin/AddCategory";
+import AddCategory from "../components/Admin/Category/AddCategory";
 import RoutePrivate from "./RoutePrivate";
 import RouteBuyer from "./BuyerRoute";
 import RouteSeller from "./SellerRoute";
@@ -19,9 +19,11 @@ import Admin from "../components/Admin/Admin";
 import Logout from "../pages/Logout";
 import Profile from "../components/Profile/Profile";
 import EditProfile from "../components/Profile/EditProfile";
-import UpdateCategory from "../components/Admin/UpdateCategory";
+import UpdateCategory from "../components/Admin/Category/UpdateCategory";
 import RouteDeliver from "./RouteDeliver";
 import Table from "../components/Deliver/Table";
+import DeleteFood from "../components/Admin/Food/DeleteFood";
+import DeleteCategory from "../components/Admin/Category/DeleteCategory";
 
 const Routers = () => {
   return (
@@ -47,9 +49,19 @@ const Routers = () => {
             path="/food/category/update/:id"
             element={<UpdateCategory />}
           />
+          <Route
+            path="/food/category/delete/:id"
+            element={<DeleteCategory />}
+          />
           <Route path="/food/create" element={<CreateFood />} />
-          <Route path="/seller" element={<Admin />} />
-          <Route path="/all-foods" element={<Admin />} />
+          <Route path="/food/update/:id" element={<UpdateFood />} />
+          <Route path="/food/delete/:id" element={<DeleteFood />} />
+          <Route path="/seller" element={<Admin navlink="pendingorder" />} />
+          <Route path="/all-foods" element={<Admin navlink="allfoods" />} />
+          <Route
+            path="/all-categories"
+            element={<Admin navlink="allcategories" />}
+          />
         </Route>
         <Route element={<RouteDeliver />}>
           <Route path="/deliver-table" element={<Table />} />

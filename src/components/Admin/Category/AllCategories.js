@@ -2,13 +2,13 @@ import React, { useEffect } from "react";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Button, Col, Table } from "reactstrap";
-import axiosInstance from "../../utils/axiosInstance";
+import axiosInstance from "../../../utils/axiosInstance";
 
 function AllCategories() {
   const [categories, setCategories] = useState();
   const navigate = useNavigate();
   const fetchCategories = async () => {
-    const response = await axiosInstance.get("/category/").catch((e) => {
+    const response = await axiosInstance.get("/seller/category/").catch((e) => {
       console.log(e.response);
     });
     setCategories(response.data);
@@ -17,16 +17,25 @@ function AllCategories() {
     fetchCategories();
   }, []);
 
-  function hideHandler(id) {
-    console.log(id);
-  }
+  const categoryStatus = async (id) => {
+    await axiosInstance
+      .get(`/seller/category/status/${id}/`)
+      .then((res) => {
+        document.querySelector(`#category-status-${id}`).innerHTML =
+          res.data.msg;
+      })
+      .catch((e) => {
+        console.log(e.response);
+      });
+  };
 
   function editHandler(id) {
-    console.log(id);
     navigate(`/food/category/update/${id}`);
   }
 
-  function deleteHandler(id) {}
+  function deleteHandler(id) {
+    navigate(`/food/category/delete/${id}`);
+  }
 
   return (
     <Col className="col-md-8">
@@ -50,18 +59,19 @@ function AllCategories() {
         <tbody>
           {categories?.map((item, id) => (
             <tr>
-              <td>{id}</td>
+              <td>{id + 1}</td>
               <td>
                 <img alt="category_image" src={item.image} />
               </td>
               <td>{item.title}</td>
               <td>
                 <Button
+                  id={`category-status-${item.id}`}
                   onClick={() => {
-                    hideHandler(item.id);
+                    categoryStatus(item.id);
                   }}
                 >
-                  Hide
+                  {item.is_visible ? "Hide" : "Public"}
                 </Button>
                 &nbsp;
                 <Button

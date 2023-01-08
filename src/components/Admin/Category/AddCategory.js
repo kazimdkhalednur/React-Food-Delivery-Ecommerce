@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button, Col, Form, FormGroup, Input, Label, Row } from "reactstrap";
-import axiosInstance from "../../utils/axiosInstance";
-import storage from "../../utils/storage";
+import axiosInstance from "../../../utils/axiosInstance";
+import storage from "../../../utils/storage";
 
 function AddCategory() {
   const [title, setTitle] = useState("");

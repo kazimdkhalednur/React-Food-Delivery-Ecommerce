@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import { Badge, Button, Col, Table } from "reactstrap";
-import axiosInstance from "../../utils/axiosInstance";
+import axiosInstance from "../../../utils/axiosInstance";
 
 function PendingOrderTable() {
   const [orders, setOrders] = useState();
@@ -25,9 +26,10 @@ function PendingOrderTable() {
           <tr>
             <th>#</th>
             <th>Address</th>
-            <th>Products</th>
-            <th>Amount</th>
-            <th>Assign</th>
+            <th style={{ width: "16vw" }}>Products</th>
+            <th style={{ width: "7vw" }}>Amount</th>
+            <th style={{ width: "9vw", textAlign: "center" }}>Assign</th>
+            <th style={{ width: "2.5vw" }}></th>
           </tr>
         </thead>
         <tbody>
@@ -45,7 +47,12 @@ function PendingOrderTable() {
                   ))}
                 </td>
                 <td>৳{order.amount}</td>
-                <td></td>
+                <td style={{ textAlign: "center" }}>Not assigned</td>
+                <td>
+                  <Button color="success">
+                    <Link>ASSIGN</Link>
+                  </Button>
+                </td>
               </tr>
             ))
           ) : (
