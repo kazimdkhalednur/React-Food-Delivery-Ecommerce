@@ -25,12 +25,17 @@ function AllOrders() {
       <Table borderless hover striped responsive>
         <thead>
           <tr>
-            <th>#</th>
-            <th>Address</th>
+            <th className="text-center">#</th>
+            <th style={{ width: "20vw" }}>Address</th>
             <th>Products</th>
-            <th>Amount</th>
-            <th className="text-center">Status</th>
-            <th></th>
+            <th style={{ width: "3vw" }}>Amount</th>
+            <th style={{ width: "9vw" }} className="text-center">
+              Deliver Man
+            </th>
+            <th style={{ width: "1vw" }} className="text-center">
+              Status
+            </th>
+            <th style={{ width: "1vw" }}></th>
           </tr>
         </thead>
         <tbody>
@@ -48,6 +53,38 @@ function AllOrders() {
                   ))}
                 </td>
                 <td>৳{order.amount}</td>
+                <td style={{ textAlign: "center" }}>
+                  {order.deliver_user ? (
+                    <>
+                      <div
+                        style={{
+                          width: "25px",
+                          height: "25px",
+                          textAlign: "center",
+                          margin: "auto",
+                        }}
+                      >
+                        <img
+                          style={{
+                            width: "100%",
+                            height: "100%",
+                            position: "relative",
+                            borderRadius: "50%",
+                          }}
+                          alt="user_image"
+                          src={
+                            order?.deliver_user.img === null
+                              ? "https://cdn-icons-png.flaticon.com/512/149/149071.png"
+                              : order?.deliver_user.img
+                          }
+                        />
+                      </div>
+                      <div>{order.deliver_user.full_name}</div>
+                    </>
+                  ) : (
+                    "Not Assigned"
+                  )}
+                </td>
                 <td className="text-center">
                   {order.status === "paid" ? (
                     <h5>
@@ -67,7 +104,7 @@ function AllOrders() {
                 </td>
                 <td>
                   <Button color="success">
-                    <Link to={`/food/update/${order.id}`}>EDIT</Link>
+                    <Link to={`/order/update/status/${order.id}`}>EDIT</Link>
                   </Button>
                 </td>
               </tr>

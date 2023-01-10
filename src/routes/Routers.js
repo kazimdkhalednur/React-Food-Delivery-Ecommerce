@@ -24,6 +24,8 @@ import RouteDeliver from "./RouteDeliver";
 import Table from "../components/Deliver/Table";
 import DeleteFood from "../components/Admin/Food/DeleteFood";
 import DeleteCategory from "../components/Admin/Category/DeleteCategory";
+import UpdateOrder from "../components/Admin/Order/UpdateOrder";
+import UpdateOrderStatus from "../components/Admin/Order/UpdateOrderStatus";
 
 const Routers = () => {
   return (
@@ -44,6 +46,11 @@ const Routers = () => {
           <Route path="/checkout" element={<Checkout />} />
         </Route>
         <Route element={<RouteSeller />}>
+          <Route path="/dashboard" element={<Admin navlink="pendingorder" />} />
+          <Route
+            path="/all-categories"
+            element={<Admin navlink="allcategories" />}
+          />
           <Route path="/food/category/create" element={<AddCategory />} />
           <Route
             path="/food/category/update/:id"
@@ -53,14 +60,19 @@ const Routers = () => {
             path="/food/category/delete/:id"
             element={<DeleteCategory />}
           />
+          <Route path="/all-foods" element={<Admin navlink="allfoods" />} />
           <Route path="/food/create" element={<CreateFood />} />
           <Route path="/food/update/:id" element={<UpdateFood />} />
           <Route path="/food/delete/:id" element={<DeleteFood />} />
-          <Route path="/seller" element={<Admin navlink="pendingorder" />} />
-          <Route path="/all-foods" element={<Admin navlink="allfoods" />} />
+          <Route path="/order/update/:id" element={<UpdateOrder />} />
           <Route
-            path="/all-categories"
-            element={<Admin navlink="allcategories" />}
+            path="/order/update/status/:id"
+            element={<UpdateOrderStatus />}
+          />
+          <Route path="/all-orders" element={<Admin navlink="allorders" />} />
+          <Route
+            path="/pending-order"
+            element={<Admin navlink="pendingorder" />}
           />
         </Route>
         <Route element={<RouteDeliver />}>

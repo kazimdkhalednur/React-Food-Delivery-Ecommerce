@@ -23,7 +23,7 @@ function AddCategory() {
     console.log(response);
     if (response.status === 201) {
       storage.set("message", "Category created successfully");
-      navigate("/seller");
+      navigate("/all-categories");
     }
   };
   return (

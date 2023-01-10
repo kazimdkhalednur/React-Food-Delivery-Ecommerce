@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { Badge, Button, Col, Table } from "reactstrap";
+import { Button, Col, Table } from "reactstrap";
 import axiosInstance from "../../../utils/axiosInstance";
 
 function PendingOrderTable() {
@@ -28,7 +28,7 @@ function PendingOrderTable() {
             <th>Address</th>
             <th style={{ width: "16vw" }}>Products</th>
             <th style={{ width: "7vw" }}>Amount</th>
-            <th style={{ width: "9vw", textAlign: "center" }}>Assign</th>
+            <th style={{ width: "9vw", textAlign: "center" }}>Delivery Man</th>
             <th style={{ width: "2.5vw" }}></th>
           </tr>
         </thead>
@@ -47,10 +47,43 @@ function PendingOrderTable() {
                   ))}
                 </td>
                 <td>৳{order.amount}</td>
-                <td style={{ textAlign: "center" }}>Not assigned</td>
+                <td style={{ textAlign: "center" }}>
+                  {order.deliver_user ? (
+                    <>
+                      <div
+                        style={{
+                          width: "25px",
+                          height: "25px",
+                          textAlign: "center",
+                          margin: "auto",
+                        }}
+                      >
+                        <img
+                          style={{
+                            width: "100%",
+                            height: "100%",
+                            position: "relative",
+                            borderRadius: "50%",
+                          }}
+                          alt="user_image"
+                          src={
+                            order?.deliver_user.img === null
+                              ? "https://cdn-icons-png.flaticon.com/512/149/149071.png"
+                              : order?.deliver_user.img
+                          }
+                        />
+                      </div>
+                      <div>{order.deliver_user.full_name}</div>
+                    </>
+                  ) : (
+                    "Not Assigned"
+                  )}
+                </td>
                 <td>
                   <Button color="success">
-                    <Link>ASSIGN</Link>
+                    <Link to={`/order/update/${order.id}`}>
+                      {order.deliver_user ? "EDIT" : "ASSIGN"}
+                    </Link>
                   </Button>
                 </td>
               </tr>

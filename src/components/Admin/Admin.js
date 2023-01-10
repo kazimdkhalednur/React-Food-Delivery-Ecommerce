@@ -30,9 +30,18 @@ const Admin = ({ navlink }) => {
       <Col className="col-md-2" style={styles.col}>
         <div>
           <ul style={styles.ul}>
+          <li>
+              <Link
+                to="/pending-order"
+                style={styles.link}
+                onClick={() => setNavLink("pendingorder")}
+              >
+                Revenew
+              </Link>
+            </li>
             <li>
               <Link
-                to="/seller"
+                to="/pending-order"
                 style={styles.link}
                 onClick={() => setNavLink("pendingorder")}
               >
@@ -41,7 +50,7 @@ const Admin = ({ navlink }) => {
             </li>
             <li style={styles.li}>
               <Link
-                to="/seller"
+                to="/all-orders"
                 style={styles.link}
                 onClick={() => setNavLink("allorders")}
               >
@@ -50,7 +59,7 @@ const Admin = ({ navlink }) => {
             </li>
             <li style={styles.li}>
               <Link
-                to="/seller"
+                to="/all-foods"
                 style={styles.link}
                 onClick={() => setNavLink("allfoods")}
               >
@@ -59,7 +68,7 @@ const Admin = ({ navlink }) => {
             </li>
             <li style={styles.li}>
               <Link
-                to="/seller"
+                to="/all-categories"
                 style={styles.link}
                 onClick={() => setNavLink("allcategories")}
               >

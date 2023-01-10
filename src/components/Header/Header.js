@@ -52,7 +52,7 @@ const sellerNavbar = [
   },
   {
     display: "Dashboard",
-    path: "/seller",
+    path: "/dashboard",
   },
 ];
 const deliverNavbar = [
