@@ -16,6 +16,7 @@ function AllOrders() {
   };
   useEffect(() => {
     fetchOrders();
+    window.scrollTo(0, 0);
   }, []);
   return (
     <Col className="col-md-8">

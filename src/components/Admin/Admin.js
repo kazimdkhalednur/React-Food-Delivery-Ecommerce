@@ -7,6 +7,9 @@ import AllFoods from "./Food/AllFoods";
 import PendingOrderTable from "./Order/PendingOrderTable";
 import AllCategories from "./Category/AllCategories";
 import storage from "../../utils/storage";
+import AdminUser from "./Accounts/AdminUser";
+import Buyers from "./Accounts/Buyers";
+import Delivers from "./Accounts/Delivers";
 
 const Admin = ({ navlink }) => {
   const [navLink, setNavLink] = useState(navlink);
@@ -19,9 +22,10 @@ const Admin = ({ navlink }) => {
       setIsAlertVisible(false);
       storage.remove("message");
     }, 3000);
+    window.scrollTo(0, 0);
   }, [message]);
   return (
-    <Row className="my-3">
+    <Row className="my-3" id="top">
       {message && isAlertVisible ? (
         <Alert className="text-center" color="primary">
           {message}
@@ -30,7 +34,7 @@ const Admin = ({ navlink }) => {
       <Col className="col-md-2" style={styles.col}>
         <div>
           <ul style={styles.ul}>
-          <li>
+            <li>
               <Link
                 to="/pending-order"
                 style={styles.link}
@@ -75,6 +79,33 @@ const Admin = ({ navlink }) => {
                 All Categories
               </Link>
             </li>
+            <li style={styles.li}>
+              <Link
+                to="/all-admin-user"
+                style={styles.link}
+                onClick={() => setNavLink("alladminusers")}
+              >
+                Admin
+              </Link>
+            </li>
+            <li style={styles.li}>
+              <Link
+                to="/all-buyers"
+                style={styles.link}
+                onClick={() => setNavLink("allbuyers")}
+              >
+                All Buyers
+              </Link>
+            </li>
+            <li style={styles.li}>
+              <Link
+                to="/all-delivery-users"
+                style={styles.link}
+                onClick={() => setNavLink("alldeliverymans")}
+              >
+                All Deliver Users
+              </Link>
+            </li>
           </ul>
         </div>
       </Col>
@@ -86,6 +117,12 @@ const Admin = ({ navlink }) => {
         <AllFoods />
       ) : navLink === "allcategories" ? (
         <AllCategories />
+      ) : navLink === "alladminusers" ? (
+        <AdminUser />
+      ) : navLink === "allbuyers" ? (
+        <Buyers />
+      ) : navLink === "alldeliverymans" ? (
+        <Delivers />
       ) : (
         ""
       )}

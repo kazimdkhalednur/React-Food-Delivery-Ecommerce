@@ -21,7 +21,7 @@ import Profile from "../components/Profile/Profile";
 import EditProfile from "../components/Profile/EditProfile";
 import UpdateCategory from "../components/Admin/Category/UpdateCategory";
 import RouteDeliver from "./RouteDeliver";
-import Table from "../components/Deliver/Table";
+import DeliverTable from "../components/Deliver/DeliverTable";
 import DeleteFood from "../components/Admin/Food/DeleteFood";
 import DeleteCategory from "../components/Admin/Category/DeleteCategory";
 import UpdateOrder from "../components/Admin/Order/UpdateOrder";
@@ -74,9 +74,18 @@ const Routers = () => {
             path="/pending-order"
             element={<Admin navlink="pendingorder" />}
           />
+          <Route
+            path="/all-admin-user"
+            element={<Admin navlink="alladminusers" />}
+          />
+          <Route path="/all-buyers" element={<Admin navlink="allbuyers" />} />
+          <Route
+            path="/all-delivery-users"
+            element={<Admin navlink="alldeliverymans" />}
+          />
         </Route>
         <Route element={<RouteDeliver />}>
-          <Route path="/deliver-table" element={<Table />} />
+          <Route path="/deliver-table" element={<DeliverTable />} />
         </Route>
       </Route>
     </Routes>

@@ -14,8 +14,9 @@ function AllOrder() {
   };
   useEffect(() => {
     fetchFoods();
+    window.scrollTo(0, 0);
   }, []);
-  
+
   const foodStatus = async (item) => {
     await axiosInstance
       .get(`seller/food/status/${item.id}/`)

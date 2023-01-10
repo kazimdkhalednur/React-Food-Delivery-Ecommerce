@@ -190,7 +190,7 @@ const Header = () => {
 
             {/*nav right icons part*/}
             <div className="nav__right d-flex align-items-center gap-4">
-              {userType === "seller" ? (
+              {userType === "seller" || userType === "deliver" ? (
                 ""
               ) : (
                 <span className="cart__icon" onClick={toggleCart}>
