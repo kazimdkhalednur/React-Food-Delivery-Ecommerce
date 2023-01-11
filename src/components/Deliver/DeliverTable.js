@@ -8,11 +8,10 @@ const DeliverTable = () => {
     await axiosInstance
       .get("/order/deliver/")
       .then((res) => {
-        console.log(res.data);
         setOrder(res.data);
       })
       .catch((e) => {
-        console.log(e);
+        console.log(e.response);
       });
   };
   useEffect(() => {
@@ -31,7 +30,7 @@ const DeliverTable = () => {
         }
       })
       .catch((e) => {
-        console.log(e);
+        console.log(e.response);
       });
   };
 

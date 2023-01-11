@@ -44,7 +44,7 @@ const Home = () => {
 
   useEffect(() => {
     let getFoods = async () => {
-      let response = await axiosInstance.get("/").catch((e) => console.log(e));
+      let response = await axiosInstance.get("/").catch((e) => console.log(e.response));
       setAllProducts(response.data);
       setfilterProducts(response.data);
     };
@@ -52,7 +52,7 @@ const Home = () => {
     let getCategory = async () => {
       let response = await axiosInstance
         .get("/category/")
-        .catch((e) => console.log(e));
+        .catch((e) => console.log(e.response));
       setAllCategorys(response.data);
     };
     getCategory();

@@ -14,13 +14,11 @@ function AddCategory() {
   const submitHandler = async (e) => {
     e.preventDefault();
 
-    console.log(image);
     const response = await axiosInstance
       .post("/category/create/", form_data)
       .catch((e) => {
         console.log(e.response);
       });
-    console.log(response);
     if (response.status === 201) {
       storage.set("message", "Category created successfully");
       navigate("/all-categories");

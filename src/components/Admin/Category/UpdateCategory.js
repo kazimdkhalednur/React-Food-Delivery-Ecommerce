@@ -22,7 +22,6 @@ function UpdateCategory() {
     if (check) {
       form_data.append("image", "");
     }
-    console.log(image);
     const response = await axiosInstance
       .put(`/category/${id}/`, form_data)
       .catch((e) => {

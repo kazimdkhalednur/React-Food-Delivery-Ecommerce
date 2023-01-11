@@ -11,7 +11,7 @@ const DeleteFood = () => {
 
   const fetchFood = async () => {
     let response = await axiosInstance.get(`/seller/food/${id}/`).catch((e) => {
-      console.log(e);
+      console.log(e.response);
     });
     setTitle(response.data.title);
   };
@@ -26,13 +26,12 @@ const DeleteFood = () => {
       .delete(`/seller/food/${id}/`)
       .then((res) => {
         if (res.status === 204) {
-          console.log("Deleted");
           storage.set("message", `"${title}" deleted successfully`);
           navigate("/all-foods");
         }
       })
       .catch((e) => {
-        console.log(e);
+        console.log(e.response);
       });
   };
   let foodDeleteCancel = async (e) => {

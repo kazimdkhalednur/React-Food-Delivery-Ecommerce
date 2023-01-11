@@ -16,10 +16,9 @@ const UpdateOrderStatus = () => {
       .then((res) => {
         setOrder(res.data);
         setStatus(res.data.status);
-        console.log(res.data);
       })
       .catch((e) => {
-        console.log(e);
+        console.log(e.response);
       });
   };
 
@@ -39,7 +38,7 @@ const UpdateOrderStatus = () => {
         storage.set("message", "Order Updated");
       })
       .catch((e) => {
-        console.log(e);
+        console.log(e.response);
       });
   };
 

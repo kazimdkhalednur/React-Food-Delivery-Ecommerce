@@ -46,7 +46,7 @@ function AllOrder() {
             <th style={{ width: "12vw" }}>Image</th>
             <th>Title</th>
             <th>Price</th>
-            <th style={{ width: "17vw" }}></th>
+            <th style={{ width: "17.5vw" }}></th>
           </tr>
         </thead>
         <tbody>

@@ -26,6 +26,8 @@ import DeleteFood from "../components/Admin/Food/DeleteFood";
 import DeleteCategory from "../components/Admin/Category/DeleteCategory";
 import UpdateOrder from "../components/Admin/Order/UpdateOrder";
 import UpdateOrderStatus from "../components/Admin/Order/UpdateOrderStatus";
+import DeleteUser from "../components/Admin/Accounts/DeleteUser";
+import CreateUser from "../components/Admin/Accounts/CreateUser";
 
 const Routers = () => {
   return (
@@ -83,6 +85,8 @@ const Routers = () => {
             path="/all-delivery-users"
             element={<Admin navlink="alldeliverymans" />}
           />
+          <Route path="/user/delete/:id" element={<DeleteUser />} />
+          <Route path="/user/create/:type" element={<CreateUser />} />
         </Route>
         <Route element={<RouteDeliver />}>
           <Route path="/deliver-table" element={<DeliverTable />} />

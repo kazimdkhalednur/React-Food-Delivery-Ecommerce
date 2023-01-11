@@ -11,7 +11,7 @@ const DeleteCategory = () => {
 
   const fetchCategory = async () => {
     let response = await axiosInstance.get(`/category/${id}/`).catch((e) => {
-      console.log(e);
+      console.log(e.response);
     });
     setTitle(response.data.title);
   };
@@ -26,13 +26,12 @@ const DeleteCategory = () => {
       .delete(`/category/${id}/`)
       .then((res) => {
         if (res.status === 204) {
-          console.log("Deleted");
           storage.set("message", `"${title}" deleted successfully`);
           navigate("/all-categories");
         }
       })
       .catch((e) => {
-        console.log(e);
+        console.log(e.response);
       });
   };
   let categoryDeleteCancel = async (e) => {

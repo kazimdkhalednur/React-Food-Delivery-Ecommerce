@@ -28,8 +28,8 @@ const Register = () => {
           navigate("/login");
         }
       })
-      .catch((error) => {
-        console.log(error);
+      .catch((e) => {
+        console.log(e.responserror);
       });
   };
   const [name, setName] = useState("");

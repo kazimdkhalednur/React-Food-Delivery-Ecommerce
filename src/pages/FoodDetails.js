@@ -44,9 +44,8 @@ const FoodDetails = () => {
     let response = await axiosInstance
       .get(`order/check-review/${id}/`)
       .catch((e) => {
-        console.log(e);
+        console.log(e.response);
       });
-    console.log(response.data);
     setActive(response.data.msg);
   };
 
@@ -128,7 +127,7 @@ const FoodDetails = () => {
         }
       })
       .catch((e) => {
-        console.log(e);
+        console.log(e.response);
       });
   };
 

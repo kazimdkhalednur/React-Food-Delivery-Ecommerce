@@ -18,7 +18,7 @@ function UpdateFood() {
 
   const fetchFood = async () => {
     let response = await axiosInstance.get(`/seller/food/${id}/`).catch((e) => {
-      console.log(e);
+      console.log(e.response);
     });
     setCategory(response.data.category.id);
     setTitle(response.data.title);
@@ -52,7 +52,7 @@ function UpdateFood() {
         }
       })
       .catch((e) => {
-        console.log(e);
+        console.log(e.response);
       });
   };
 

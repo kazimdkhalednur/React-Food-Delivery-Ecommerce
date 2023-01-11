@@ -12,10 +12,9 @@ const UpdateOrder = () => {
   const navigate = useNavigate();
   const fetchDeliveryManList = async () => {
     let response = await axiosInstance.get(`/accounts/deliver/`).catch((e) => {
-      console.log(e);
+      console.log(e.response);
     });
     setDeliverMans(response.data);
-    console.log(response.data);
   };
 
   const fetchOrder = async () => {
@@ -23,10 +22,9 @@ const UpdateOrder = () => {
       .get(`/order/deliver/${id}/`)
       .then((res) => {
         setOrder(res.data);
-        console.log(res.data);
       })
       .catch((e) => {
-        console.log(e);
+        console.log(e.response);
       });
   };
 
@@ -47,7 +45,7 @@ const UpdateOrder = () => {
         storage.set("message", "Order Updated");
       })
       .catch((e) => {
-        console.log(e);
+        console.log(e.response);
       });
   };
 
