@@ -10,6 +10,7 @@ import storage from "../../utils/storage";
 import AdminUser from "./Accounts/AdminUser";
 import Buyers from "./Accounts/Buyers";
 import Delivers from "./Accounts/Delivers";
+import Bar from "./revenue/Bar";
 
 const Admin = ({ navlink }) => {
   const [navLink, setNavLink] = useState(navlink);
@@ -36,11 +37,11 @@ const Admin = ({ navlink }) => {
           <ul style={styles.ul}>
             <li>
               <Link
-                to="/pending-order"
+                to="/revenue"
                 style={styles.link}
-                onClick={() => setNavLink("pendingorder")}
+                onClick={() => setNavLink("revenue")}
               >
-                Revenew
+                Revenue
               </Link>
             </li>
             <li>
@@ -109,7 +110,9 @@ const Admin = ({ navlink }) => {
           </ul>
         </div>
       </Col>
-      {navLink === "pendingorder" ? (
+      {navLink === "revenue" ? (
+        <Bar />
+      ) : navLink === "pendingorder" ? (
         <PendingOrderTable />
       ) : navLink === "allorders" ? (
         <AllOrders />

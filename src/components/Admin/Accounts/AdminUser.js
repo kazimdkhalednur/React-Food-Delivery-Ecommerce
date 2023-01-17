@@ -46,7 +46,7 @@ const AdminUser = () => {
   return (
     <Col className="col-md-8">
       <span className="text-left mr-0">
-        <Link to="/user/create">
+        <Link to="/user/create/seller">
           <Button>Create New Admin User</Button>
         </Link>
       </span>

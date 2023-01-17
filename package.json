@@ -29,7 +29,8 @@
     "redux": "^4.2.0",
     "remixicon": "^2.5.0",
     "slick-carousel": "^1.8.1",
-    "web-vitals": "^2.1.4"
+    "web-vitals": "^2.1.4",
+    "zingchart": "^2.9.10"
   },
   "scripts": {
     "predeploy": "npm run build",

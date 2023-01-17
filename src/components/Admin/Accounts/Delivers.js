@@ -42,7 +42,7 @@ const Delivers = () => {
   return (
     <Col className="col-md-8">
       <span className="text-left mr-0">
-        <Link to="/user/create">
+        <Link to="/user/create/deliver">
           <Button>Create New Deliver User</Button>
         </Link>
       </span>
