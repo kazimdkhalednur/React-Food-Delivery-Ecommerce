@@ -1,10 +1,12 @@
 import React, { useEffect } from "react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { Button, Col, Table } from "reactstrap";
+import { Button, Col, FormGroup, Input, Label, Table } from "reactstrap";
 import axiosInstance from "../../../utils/axiosInstance";
 
 function AllOrder() {
+  const [category, setCategory] = useState();
+  const [categories, setCategories] = useState();
   const [foods, setFoods] = useState();
   const fetchFoods = async () => {
     const response = await axiosInstance.get("/seller/").catch((e) => {
@@ -12,10 +14,33 @@ function AllOrder() {
     });
     setFoods(response.data);
   };
+  const fetchFoodsByCategory = async () => {
+    const response = await axiosInstance
+      .get(`/seller/${category}/`)
+      .catch((e) => {
+        console.log(e.response);
+      });
+    setFoods(response.data);
+  };
+  const fetchCategories = async () => {
+    const response = await axiosInstance.get("/category/").catch((e) => {
+      console.log(e.response);
+    });
+    setCategories(response.data);
+  };
   useEffect(() => {
     fetchFoods();
+    fetchCategories();
     window.scrollTo(0, 0);
   }, []);
+  useEffect(() => {
+    console.log("dfgrtwht");
+    if (category === "none") {
+      fetchFoods();
+    } else {
+      fetchFoodsByCategory();
+    }
+  }, [category]);
 
   const foodStatus = async (item) => {
     await axiosInstance
@@ -30,7 +55,6 @@ function AllOrder() {
 
   return (
     <Col className="col-md-8">
-      {/* <Alert color="success">Order placed successfully</Alert> */}
       <span className="text-left mr-0">
         <Link to="/food/create">
           <Button>Create New Food</Button>
@@ -39,6 +63,30 @@ function AllOrder() {
       <h1 className="mb-3 text-center mt-10">
         <u>All Foods</u>
       </h1>
+      <div style={{ display: "flex" }}>
+        <h6 style={{ marginTop: "6px", paddingRight: "10px" }}>
+          Search by Category
+        </h6>
+        <div>
+          <FormGroup>
+            <Input
+              type="select"
+              name="category"
+              id="exampleSelect"
+              onChange={(e) => setCategory(e.target.value)}
+            >
+              <option value="none" select="selected">
+                ---------
+              </option>
+              {categories?.map((item) => (
+                <option value={item.id} key={item.id}>
+                  {item.title}
+                </option>
+              ))}
+            </Input>
+          </FormGroup>
+        </div>
+      </div>
       <Table borderless hover striped responsive>
         <thead>
           <tr>
@@ -46,7 +94,7 @@ function AllOrder() {
             <th style={{ width: "12vw" }}>Image</th>
             <th>Title</th>
             <th>Price</th>
-            <th style={{ width: "17.5vw" }}></th>
+            <th style={{ width: "18vw" }}></th>
           </tr>
         </thead>
         <tbody>

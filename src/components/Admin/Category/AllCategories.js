@@ -54,7 +54,7 @@ function AllCategories() {
             <th style={{ width: "3vw" }}>#</th>
             <th style={{ width: "10vw" }}>Image</th>
             <th style={{ width: "20vw" }}>Title</th>
-            <th style={{ width: "15.5vw" }}></th>
+            <th style={{ width: "16vw" }}></th>
           </tr>
         </thead>
         <tbody>
