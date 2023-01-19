@@ -10,6 +10,7 @@ const Logout = () => {
   const [message, setMessage] = useState(msg);
 
   useEffect(() => {
+    window.scrollTo(0, 0);
     if (authenticated) {
       storage.remove("authTokens");
       window.location.reload();

@@ -22,6 +22,7 @@ const Checkout = () => {
   };
 
   useEffect(() => {
+    window.scrollTo(0, 0);
     getUserData();
   }, []);
 
@@ -49,8 +50,7 @@ const Checkout = () => {
                   id: res.data.id,
                 })
                 .then((e) => {
-                  console.log(e.data.url);
-                  window.location.replace(e.data.url);
+                  window.location.replace(e.data.GatewayPageURL);
                 })
                 .catch((e) => e.response);
             };
@@ -92,7 +92,7 @@ const Checkout = () => {
                 </div>
                 <div className="form__group">
                   <input
-                    type="number"
+                    type="text"
                     placeholder="Phone number"
                     required
                     value={enterNumber}

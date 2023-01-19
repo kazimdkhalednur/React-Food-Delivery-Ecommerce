@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Helmet from "../components/Helmet/Helmet";
 import CommonSection from "../components/UI/common-section/CommonSection";
 import { Container, Row, Col } from "reactstrap";
@@ -12,6 +12,10 @@ const Register = () => {
   const signupEmailRef = useRef();
   const baseURL = process.env.REACT_APP_SERVICE_URL;
   const navigate = useNavigate();
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   const submitHandler = (e) => {
     e.preventDefault();

@@ -7,6 +7,7 @@ import storage from "../../../utils/storage";
 
 const AdminUser = () => {
   const [seller, setSeller] = useState();
+  const [superUser, setSuperUser] = useState();
   const navigate = useNavigate();
   const authTokens = storage.get("authTokens");
   const refreshToken = jwt_decode(authTokens?.refresh);
@@ -23,9 +24,20 @@ const AdminUser = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
     fetchSeller();
+    getSuperUser(refreshToken?.user_id);
   }, []);
   const deleteUser = (id) => {
     navigate(`/user/delete/${id}`);
+  };
+  const getSuperUser = async (id) => {
+    await axiosInstance
+      .get(`/accounts/is-superuser/${id}/`)
+      .then((res) => {
+        setSuperUser(res.data?.is_superuser);
+      })
+      .catch((e) => {
+        console.log(e.response);
+      });
   };
   const changeActive = async (id) => {
     await axiosInstance
@@ -60,7 +72,7 @@ const AdminUser = () => {
             <th style={{ width: "6vw", textAlign: "center" }}>Image</th>
             <th style={{ width: "20vw" }}>Email</th>
             <th style={{ width: "20vw" }}>Phone</th>
-            <th style={{ width: "15vw" }}></th>
+            {superUser ? <th style={{ width: "15vw" }}></th> : undefined}
           </tr>
         </thead>
         <tbody>
@@ -94,50 +106,52 @@ const AdminUser = () => {
               </td>
               <td style={{ paddingTop: "12px" }}>{item.email}</td>
               <td style={{ paddingTop: "12px" }}>{item.phone}</td>
-              <td>
-                {refreshToken?.user_id === item.id ? (
-                  <Button color="warning" disabled>
-                    Disable
-                  </Button>
-                ) : (
-                  <>
-                    {item.is_active === true ? (
-                      <Button
-                        id={`active-${item.id}`}
-                        color="warning"
-                        onClick={() => {
-                          changeActive(item.id);
-                        }}
-                      >
-                        Disable
-                      </Button>
-                    ) : (
-                      <Button
-                        id={`active-${item.id}`}
-                        color="success"
-                        onClick={() => {
-                          changeActive(item.id);
-                        }}
-                      >
-                        Enable
-                      </Button>
-                    )}
-                  </>
-                )}
-                &nbsp;
-                {refreshToken?.user_id === item.id ? (
-                  <Button color="danger">Delete</Button>
-                ) : (
-                  <Button
-                    color="danger"
-                    onClick={() => {
-                      deleteUser(item.id);
-                    }}
-                  >
-                    Delete
-                  </Button>
-                )}
-              </td>
+              {superUser ? (
+                <td>
+                  {refreshToken?.user_id === item.id ? (
+                    <Button color="warning" disabled>
+                      Disable
+                    </Button>
+                  ) : (
+                    <>
+                      {item.is_active === true ? (
+                        <Button
+                          id={`active-${item.id}`}
+                          color="warning"
+                          onClick={() => {
+                            changeActive(item.id);
+                          }}
+                        >
+                          Disable
+                        </Button>
+                      ) : (
+                        <Button
+                          id={`active-${item.id}`}
+                          color="success"
+                          onClick={() => {
+                            changeActive(item.id);
+                          }}
+                        >
+                          Enable
+                        </Button>
+                      )}
+                    </>
+                  )}
+                  &nbsp;
+                  {refreshToken?.user_id === item.id ? (
+                    <Button color="danger">Delete</Button>
+                  ) : (
+                    <Button
+                      color="danger"
+                      onClick={() => {
+                        deleteUser(item.id);
+                      }}
+                    >
+                      Delete
+                    </Button>
+                  )}
+                </td>
+              ) : undefined}
             </tr>
           ))}
         </tbody>

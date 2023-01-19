@@ -17,6 +17,7 @@ const AllFoods = () => {
   const [allProducts, setAllProducts] = useState();
 
   useEffect(() => {
+    window.scrollTo(0, 0);
     let getFood = async () => {
       let response = await axiosInstance.get("");
       setAllProducts(response.data);

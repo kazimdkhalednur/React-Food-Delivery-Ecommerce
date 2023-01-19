@@ -43,8 +43,11 @@ const Home = () => {
   const [filterProducts, setfilterProducts] = useState(allProducts);
 
   useEffect(() => {
+    window.scrollTo(0, 0);
     let getFoods = async () => {
-      let response = await axiosInstance.get("/").catch((e) => console.log(e.response));
+      let response = await axiosInstance
+        .get("/")
+        .catch((e) => console.log(e.response));
       setAllProducts(response.data);
       setfilterProducts(response.data);
     };

@@ -1,13 +1,24 @@
 import React, { useEffect } from "react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { Button, Col, FormGroup, Input, Label, Table } from "reactstrap";
+import { Button, Col, FormGroup, Input, Label, Row, Table } from "reactstrap";
 import axiosInstance from "../../../utils/axiosInstance";
 
 function AllOrder() {
+  const [searchTerm, setSearchTerm] = useState("");
   const [category, setCategory] = useState();
   const [categories, setCategories] = useState();
   const [foods, setFoods] = useState();
+  const searchedProduct = foods?.filter((item) => {
+    if (searchTerm.value === "") {
+      return item;
+    }
+    if (item.title.toLowerCase().includes(searchTerm.toLowerCase())) {
+      return item;
+    } else {
+      return console.log("not found");
+    }
+  });
   const fetchFoods = async () => {
     const response = await axiosInstance.get("/seller/").catch((e) => {
       console.log(e.response);
@@ -34,7 +45,6 @@ function AllOrder() {
     window.scrollTo(0, 0);
   }, []);
   useEffect(() => {
-    console.log("dfgrtwht");
     if (category === "none") {
       fetchFoods();
     } else {
@@ -64,27 +74,43 @@ function AllOrder() {
         <u>All Foods</u>
       </h1>
       <div style={{ display: "flex" }}>
-        <h6 style={{ marginTop: "6px", paddingRight: "10px" }}>
-          Search by Category
-        </h6>
-        <div>
-          <FormGroup>
-            <Input
-              type="select"
-              name="category"
-              id="exampleSelect"
-              onChange={(e) => setCategory(e.target.value)}
-            >
-              <option value="none" select="selected">
-                ---------
-              </option>
-              {categories?.map((item) => (
-                <option value={item.id} key={item.id}>
-                  {item.title}
+        <div style={{ display: "flex" }}>
+          <h6 style={{ marginTop: "6px", paddingRight: "10px" }}>
+            Search by Category
+          </h6>
+          <div>
+            <FormGroup>
+              <Input
+                type="select"
+                name="category"
+                id="exampleSelect"
+                onChange={(e) => setCategory(e.target.value)}
+              >
+                <option value="none" select="selected">
+                  ---------
                 </option>
-              ))}
-            </Input>
-          </FormGroup>
+                {categories?.map((item) => (
+                  <option value={item.id} key={item.id}>
+                    {item.title}
+                  </option>
+                ))}
+              </Input>
+            </FormGroup>
+          </div>
+        </div>
+        <div
+          style={{ padding: "4.5px 12px", marginLeft: "20px" }}
+          className="search__widget d-flex align-items-center justify-content-between "
+        >
+          <input
+            type="text"
+            placeholder="Product"
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+          />
+          <span>
+            <i className="ri-search-line"></i>
+          </span>
         </div>
       </div>
       <Table borderless hover striped responsive>
@@ -98,7 +124,7 @@ function AllOrder() {
           </tr>
         </thead>
         <tbody>
-          {foods?.map((item, id) => (
+          {searchedProduct?.map((item, id) => (
             <tr
               style={{
                 lineHeight: "15vh",

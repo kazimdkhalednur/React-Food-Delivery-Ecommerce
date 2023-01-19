@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 import CommonSection from "../components/UI/common-section/CommonSection";
 import Helmet from "../components/Helmet/Helmet";
@@ -11,7 +11,10 @@ import { Link } from "react-router-dom";
 const Cart = () => {
   const cartItems = useSelector((state) => state.cart.cartItems);
   const totalAmount = useSelector((state) => state.cart.totalAmount);
-
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [])
+  
   return (
     <Helmet title="Cart">
       <CommonSection title="Your Cart" />

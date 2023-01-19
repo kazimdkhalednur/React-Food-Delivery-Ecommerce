@@ -50,6 +50,7 @@ const Login = () => {
     setData(userdata);
   };
   useEffect(() => {
+    window.scrollTo(0, 0);
     if (authenticated) {
       navigate("/");
     }
