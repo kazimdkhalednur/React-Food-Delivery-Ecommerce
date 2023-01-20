@@ -28,7 +28,6 @@ import UpdateOrder from "../components/Admin/Order/UpdateOrder";
 import UpdateOrderStatus from "../components/Admin/Order/UpdateOrderStatus";
 import DeleteUser from "../components/Admin/Accounts/DeleteUser";
 import CreateUser from "../components/Admin/Accounts/CreateUser";
-import Bar from "../components/Admin/revenue/Bar";
 
 const Routers = () => {
   return (
@@ -49,7 +48,7 @@ const Routers = () => {
           <Route path="/checkout" element={<Checkout />} />
         </Route>
         <Route element={<RouteSeller />}>
-          <Route path="/dashboard" element={<Admin navlink="pendingorder" />} />
+          <Route path="/dashboard" element={<Admin navlink="revenue" />} />
           <Route
             path="/all-categories"
             element={<Admin navlink="allcategories" />}

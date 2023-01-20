@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { Button, Col, FormGroup, Input, Label, Row, Table } from "reactstrap";
+import { Button, Col, FormGroup, Input, Table } from "reactstrap";
 import axiosInstance from "../../../utils/axiosInstance";
 
 function AllOrder() {

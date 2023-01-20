@@ -12,10 +12,8 @@ const Checkout = () => {
   const [enterName, setEnterName] = useState("");
   const [enterAddress, setEnterAddress] = useState("");
   const [enterNumber, setEnterNumber] = useState("");
-  const [userData, setUserData] = useState();
   const getUserData = async () => {
     let response = await axiosInstance.get("/accounts/detail/");
-    setUserData(response.data);
     setEnterName(response.data.full_name);
     setEnterAddress(response.data.address);
     setEnterNumber(response.data.phone);
